@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { UserRound, Search, ShoppingCart, AlignRight } from "lucide-react";
 
 function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
   const toggleNavbar = () => {
-    const nav = document.querySelector("nav");
-    nav.classList.toggle("hidden");
+    setIsOpen(!isOpen);
   };
+
   return (
     <div>
       <div className="flex justify-between m-10">
@@ -17,9 +19,8 @@ function Header() {
           <AlignRight onClick={toggleNavbar} />
         </div>
       </div>
-
-      <nav>
-        <ul className="flex flex-col items-center gap-6 pt-10 text-3xl text-gray-600 cursor-pointer">
+      <nav className={`${isOpen ? "block" : "hidden"} bg-white shadow-md`}>
+        <ul className="flex flex-col items-center gap-6 pt-10 pb-20 text-3xl text-neutral-500 cursor-pointer">
           <li className="font-medium hover:font-normal ">Home</li>
           <li className="font-medium hover:font-normal">Product</li>
           <li className="font-medium hover:font-normal">Pricing</li>
