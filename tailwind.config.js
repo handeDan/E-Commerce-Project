@@ -6,6 +6,23 @@ export default {
       fontSize: {
         "40px": "40px", // 40px boyutunda yazı tipi
       },
+      colors: {
+        primary: {
+          //griler
+          light: "#BDBDBD", // Açık renk (bazı yazılar)
+          DEFAULT: "#737373", // Ana renk (yazılar:gri)
+          dark: "#252B42", // Koyu renk (logo ve başlıklar)
+        },
+        secondary: {
+          blue: "#23A6F0", //blue
+          light_blue: "#8EC2F2", //light blue
+          green: "#23856D", //green
+          light_green: "#2DC071", //light green
+          alert: "#E77C40", //orange
+          dark: "#252B42", //dark
+          gray: "#FAFAFA", //light gray
+        },
+      },
     },
   },
   plugins: [],

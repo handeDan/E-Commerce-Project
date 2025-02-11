@@ -22,35 +22,31 @@ function HeroSlider() {
         effect="fade"
         navigation
         pagination={{ clickable: true }}
-        // autoplay={{
-        //   delay: 2000,
-        //   disableOnInteraction: false,
-        // }}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: false,
+        }}
         modules={[Autoplay, EffectFade, Navigation, Pagination]}
         className="mySwiper"
       >
         <SwiperSlide>
           <div
-            className="slide-content flex items-center"
+            className="slide-content flex items-center bg-cover g-bottom w-full h-[80vh]"
             style={{
               backgroundImage: "url('images/product-slide-1.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "bottom",
-              width: "100vw",
-              height: "80vh",
             }}
           >
             <div className="flex flex-col items-center text-center text-white">
-              <p className="font-bold">SUMMER 2020</p>
+              <p className="font-bold">SUMMER 2025</p>
               <p className="logo text-40px text-wrap text-center w-2/3 font-bold my-10 leading-tight">
                 NEW COLLECTION
               </p>
-              <p className="w-3/6 font-medium">
+              <p className="w-3/6 font-medium mb-5">
                 We know how large objects will act, but things on a small scale.
               </p>
               <button
                 onClick={handleClick}
-                className="bg-green-500 hover:bg-gray-500 text-xl text-white font-bold py-3 px-8 rounded-sm m-5"
+                className="bg-secondary-light_green hover:bg-gray-500 text-xl text-white font-bold py-3 px-8 rounded-sm m-5"
               >
                 SHOP NOW
               </button>
@@ -60,23 +56,24 @@ function HeroSlider() {
 
         <SwiperSlide>
           <div
-            className="slide-content"
+            className="slide-content flex items-center bg-cover g-bottom w-full h-[80vh]"
             style={{
               backgroundImage: "url('images/product-slide-2.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              height: "100vh",
             }}
           >
-            <div className="flex flex-col items-center pt-20">
-              <p className="logo text-5xl">THE BEST PRODUCTS EVER</p>
-              <br />
-              <p>Discover our best products</p>
+            <div className="flex flex-col items-center text-center text-white">
+              <p className="font-bold">SUMMER 2025</p>
+              <p className="logo text-40px text-wrap text-center w-2/3 font-bold my-10 leading-tight">
+                OUR BEST PRODUCTS
+              </p>
+              <p className="w-3/6 font-medium">
+                We know how large objects will act, but things on a small scale.
+              </p>
               <button
                 onClick={handleClick}
-                className="bg-gray-950 hover:bg-gray-500 text-xl text-white font-bold py-3 px-6 rounded-full m-5"
+                className="bg-green-500 hover:bg-gray-500 text-xl text-white font-bold py-3 px-8 rounded-sm m-5"
               >
-                CHECK NOW
+                SHOP NOW
               </button>
             </div>
           </div>
