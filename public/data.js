@@ -25,7 +25,7 @@ export const categoryList = [
   },
 ];
 
-export const ProductList = [
+export const productList = [
   {
     id: 1,
     title: "Product Title",
@@ -89,5 +89,47 @@ export const ProductList = [
     price1: "$16.48",
     price2: "$6.48",
     image: "/images/products/8.jpg",
+  },
+];
+
+export const postList = [
+  {
+    id: 1,
+    image: "/images/posts/1.jpeg",
+    topic_1: "Google",
+    topic_2: "Trending",
+    topic_3: "New",
+    title: "Loudest à la Madison #1 (L'integral)",
+    description:
+      "We focus on ergonomics and meeting you where you work. It's only a keystroke away.",
+    date: "22 April 2021",
+    comments: "10 comments",
+    link: "Learn More",
+  },
+  {
+    id: 2,
+    image: "/images/posts/2.jpeg",
+    topic_1: "Google",
+    topic_2: "Trending",
+    topic_3: "New",
+    title: "Loudest à la Madison #1 (L'integral)",
+    description:
+      "We focus on ergonomics and meeting you where you work. It's only a keystroke away.",
+    date: "22 April 2021",
+    comments: "10 comments",
+    link: "Learn More",
+  },
+  {
+    id: 3,
+    image: "/images/posts/3.jpeg",
+    topic_1: "Google",
+    topic_2: "Trending",
+    topic_3: "New",
+    title: "Loudest à la Madison #1 (L'integral)",
+    description:
+      "We focus on ergonomics and meeting you where you work. It's only a keystroke away.",
+    date: "22 April 2021",
+    comments: "10 comments",
+    link: "Learn More",
   },
 ];

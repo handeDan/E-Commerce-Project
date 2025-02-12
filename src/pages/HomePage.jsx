@@ -4,6 +4,7 @@ import CategoryPick from "../components/CategoryPick";
 import ProductCategoryList from "../components/ProductCategoryList";
 import Slider from "../components/Slider";
 import C2A from "../components/C2A";
+import FeaturedPosts from "../components/FeaturedPosts";
 
 function HomePage() {
   return (
@@ -13,6 +14,7 @@ function HomePage() {
       <ProductCategoryList />
       <Slider />
       <C2A />
+      <FeaturedPosts />
     </div>
   );
 }

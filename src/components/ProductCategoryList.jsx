@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductList } from "../../public/data";
+import { productList } from "../../public/data";
 import ProductCard from "./ProductCard";
 
 function ProductCategoryList() {
@@ -17,7 +17,7 @@ function ProductCategoryList() {
         </p>
       </div>
       <div className="mb-20">
-        {ProductList.map((item, key) => (
+        {productList.map((item, key) => (
           <ProductCard key={key} item={item} />
         ))}
       </div>
