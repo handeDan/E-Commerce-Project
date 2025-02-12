@@ -1,6 +1,6 @@
 import React from "react";
 
-function CategoryCard({ item, key }) {
+function CategoryCard({ item }) {
   return (
     <div>
       <div
