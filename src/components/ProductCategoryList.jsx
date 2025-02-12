@@ -16,9 +16,11 @@ function ProductCategoryList() {
           Problems trying to resolve the conflict between
         </p>
       </div>
-      {ProductList.map((item, key) => (
-        <ProductCard key={key} item={item} />
-      ))}
+      <div className="mb-20">
+        {ProductList.map((item, key) => (
+          <ProductCard key={key} item={item} />
+        ))}
+      </div>
     </div>
   );
 }
