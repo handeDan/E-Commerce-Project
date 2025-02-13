@@ -3,8 +3,9 @@ import { AlarmClock, ChartLine, ChevronRight } from "lucide-react";
 
 function FeaturedPost({ item }) {
   return (
-    <div className="border bg-white m-10 rounded-sm shadow-sm mb-20">
-      <img src={item.image} alt={item.title} className="mt-10" />
+    //TODO: css mobilde ayarlanmalı.
+    <div className="border bg-white rounded-sm shadow-sm mb-20 w-1/4 min-w-[300px] ">
+      <img src={item.image} alt={item.title} className="w-max" />
       <div className="p-5">
         <div className="flex justify-start gap-3 mb-3">
           <p className="text-secondary-light_blue font-bold">{item.topic_1}</p>

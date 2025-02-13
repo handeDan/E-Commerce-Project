@@ -14,9 +14,11 @@ function FeaturedPosts() {
           Problems trying to resolve the conflict between the two major
         </p>
       </div>
-      {postList.map((item, key) => (
-        <FeaturedPost key={key} item={item} />
-      ))}
+      <div className="mx-48 flex flex-wrap gap-1 justify-around">
+        {postList.map((item, key) => (
+          <FeaturedPost key={key} item={item} />
+        ))}
+      </div>
     </div>
   );
 }
