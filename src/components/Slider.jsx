@@ -30,12 +30,7 @@ function Slider() {
         className="mySwiper"
       >
         <SwiperSlide>
-          <div
-            className="slide-content flex items-center bg-cover g-bottom w-full h-[80vh] bg-secondary-green"
-            // style={{
-            //   backgroundImage: "url('images/slider2.jpg')",
-            // }}
-          >
+          <div className="slide-content flex items-center justify-center bg-cover g-bottom w-full h-[80vh] bg-secondary-green">
             <div className="flex flex-col items-center text-center text-white">
               <p className="font-bold">SUMMER 2025</p>
               <p className="logo text-40px text-wrap text-center w-2/3 font-bold mt-10 mb-5 leading-tight">
@@ -56,12 +51,7 @@ function Slider() {
         </SwiperSlide>
 
         <SwiperSlide>
-          <div
-            className="slide-content flex items-center bg-cover g-bottom w-full h-[80vh] bg-secondary-alert"
-            // style={{
-            //   backgroundImage: "url('images/slider3.jpg')",
-            // }}
-          >
+          <div className="slide-content flex items-center justify-center bg-cover g-bottom w-full h-[80vh] bg-secondary-alert">
             <div className="flex flex-col items-center text-center text-white">
               <p className="font-bold">SUMMER 2025</p>
               <p className="logo text-40px text-wrap text-center w-2/3 font-bold mt-10 mb-5 leading-tight">
