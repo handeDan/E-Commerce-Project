@@ -31,22 +31,22 @@ function HeroSlider() {
       >
         <SwiperSlide>
           <div
-            className="slide-content flex items-center bg-cover g-bottom w-full h-[80vh]"
+            className="slide-content flex items-center justify-center bg-cover bg-top g-bottom w-full h-[80vh]"
             style={{
-              backgroundImage: "url('images/product-slide-1.jpg')",
+              backgroundImage: "url('images/product-slide-2.jpg')",
             }}
           >
-            <div className="flex flex-col items-center text-center text-white">
+            <div className="flex flex-col items-center text-center">
               <p className="font-bold">SUMMER 2025</p>
               <p className="logo text-40px text-wrap text-center w-2/3 font-bold my-10 leading-tight">
                 NEW COLLECTION
               </p>
-              <p className="w-3/6 font-medium mb-5">
+              <p className="w-3/6 font-medium">
                 We know how large objects will act, but things on a small scale.
               </p>
               <button
                 onClick={handleClick}
-                className="bg-secondary-light_green hover:bg-gray-500 text-xl text-white font-bold py-3 px-8 rounded-sm m-5"
+                className="bg-green-500 hover:bg-gray-500 text-xl text-white font-bold py-3 px-8 rounded-sm m-5"
               >
                 SHOP NOW
               </button>
@@ -56,9 +56,9 @@ function HeroSlider() {
 
         <SwiperSlide>
           <div
-            className="slide-content flex items-center bg-cover g-bottom w-full h-[80vh]"
+            className="slide-content flex items-center justify-center bg-cover bg-top g-bottom w-full h-[80vh]"
             style={{
-              backgroundImage: "url('images/product-slide-2.jpg')",
+              backgroundImage: "url('images/product-slide-1.jpg')",
             }}
           >
             <div className="flex flex-col items-center text-center text-white">

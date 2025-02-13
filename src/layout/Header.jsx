@@ -11,6 +11,7 @@ import {
   Facebook,
   Twitter,
   Heart,
+  ChevronDown,
 } from "lucide-react";
 
 function Header() {
@@ -19,6 +20,8 @@ function Header() {
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+
+  const [isList, setIsList] = useState(false);
 
   return (
     <div>
@@ -47,18 +50,58 @@ function Header() {
       <div>
         {/* mobilde görünmeyen kısım: */}
         <div className="hidden md:flex justify-between m-6 text-sm">
-          <img src="images/Bandage.svg" />
-          <div className="flex gap-4">
+          <img src="images/Bandage.svg" className="cursor-pointer" />
+          <div className="flex items-center gap-5 cursor-pointer">
             <p className="font-medium hover:font-normal ">Home</p>
-            <p className="font-medium hover:font-normal">Shop</p>
-            <p className="font-medium hover:font-normal">About</p>
+
+            <div
+              className="relative"
+              onMouseEnter={() => setIsList(true)}
+              onMouseLeave={() => setIsList(false)}
+            >
+              <div className="font-medium hover:font-normal cursor-pointer flex items-center gap-1">
+                Shop
+                <ChevronDown
+                  className={`transition-transform duration-300 ${
+                    isList ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
+
+              {/* Açılır Menü */}
+              {isList && (
+                <nav className="absolute left-0 top-full bg-white shadow-lg z-50 p-5 w-full md:w-auto max-w-[300px] md:max-w-[500px] rounded-md">
+                  <div className="flex flex-col md:flex-row gap-6">
+                    <ul className="flex flex-col gap-4 text-primary font-medium cursor-pointer">
+                      <p className="text-primary-dark font-bold">Kadın</p>
+                      <p className="hover:text-secondary">Bags</p>
+                      <p className="hover:text-secondary">Belts</p>
+                      <p className="hover:text-secondary">Cosmetics</p>
+                      <p className="hover:text-secondary">Hats</p>
+                    </ul>
+                    <ul className="flex flex-col gap-4 text-primary font-medium cursor-pointer">
+                      <p className="text-primary-dark font-bold">Erkek</p>
+                      <p className="hover:text-secondary">Bags</p>
+                      <p className="hover:text-secondary">Belts</p>
+                      <p className="hover:text-secondary">Cosmetics</p>
+                      <p className="hover:text-secondary">Hats</p>
+                    </ul>
+                  </div>
+                </nav>
+              )}
+            </div>
+
+            <p className="font-medium hover:font-normal ml-1">About</p>
             <p className="font-medium hover:font-normal">Blog</p>
             <p className="font-medium hover:font-normal">Contact</p>
-            <p className="font-medium hover:font-normal">Pages</p>
+            <div className="relative group flex ">
+              <p className="font-medium hover:font-normal">Pages</p>
+              <ChevronDown className="absolute left-full top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mr-15" />
+            </div>
           </div>
           <div className="flex">
             <UserRound className="text-secondary-blue font-bold cursor-pointer mr-2" />
-            <p className="text-secondary-blue font-bold mr-5 lg:flex hidden">
+            <p className="text-secondary-blue font-bold mr-5 lg:flex hidden cursor-pointer">
               Login / Register
             </p>
             <Search className="text-secondary-blue cursor-pointer mr-5" />
