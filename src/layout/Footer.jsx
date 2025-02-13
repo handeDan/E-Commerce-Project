@@ -5,7 +5,7 @@ function Footer() {
   return (
     <div>
       {/* Üst Kısım */}
-      <div className="flex flex-col justify-between p-10 bg-secondary-gray">
+      <div className="flex max-md:flex-col justify-between p-10 bg-secondary-gray">
         <img src="images/Bandage.svg" width={"108px"} />
         <div className="flex justify-start mt-5 gap-5 text-secondary-blue">
           <Facebook />
@@ -15,12 +15,12 @@ function Footer() {
       </div>
 
       {/* Bilgi Bölümleri */}
-      <div className="p-10 flex flex-col gap-5 mt-10">
+      <div className="p-10 flex max-md:flex-col gap-5 justify-between mt-10">
         {/* Company Info */}
         <div>
           <p className="font-bold text-primary-dark">Company Info</p>
           <div className="text-primary">
-            <ul className="flex flex-col gap-2 mt-5">
+            <ul className="flex flex-col gap-2 mt-5 text-sm">
               <li className="font-bold">About us</li>
               <li className="font-bold">Carrier</li>
               <li className="font-bold">We are hiring</li>
@@ -33,7 +33,7 @@ function Footer() {
         <div>
           <p className="font-bold text-primary-dark">Legal</p>
           <div className="text-primary">
-            <ul className="flex flex-col gap-2 mt-5">
+            <ul className="flex flex-col gap-2 mt-5 text-sm">
               <li className="font-bold">Terms & Conditions</li>
               <li className="font-bold">Privacy Policy</li>
               <li className="font-bold">Cookie Policy</li>
@@ -45,7 +45,7 @@ function Footer() {
         <div>
           <p className="font-bold text-primary-dark">Features</p>
           <div className="text-primary">
-            <ul className="flex flex-col gap-2 mt-5">
+            <ul className="flex flex-col gap-2 mt-5 text-sm">
               <li className="font-bold">Business Marketing</li>
               <li className="font-bold">User Analytic</li>
               <li className="font-bold">Live Chat</li>
@@ -58,7 +58,7 @@ function Footer() {
         <div>
           <p className="font-bold text-primary-dark">Resources</p>
           <div className="text-primary">
-            <ul className="flex flex-col gap-2 mt-5">
+            <ul className="flex flex-col gap-2 mt-5 text-sm">
               <li className="font-bold">iOS & Android</li>
               <li className="font-bold">Watch a Demo</li>
               <li className="font-bold">Customers</li>
@@ -80,13 +80,13 @@ function Footer() {
               Subscribe
             </button>
           </div>
-          <p className="text-primary pb-10">Lore imp sum dolor Amit</p>
+          <p className="text-primary pb-10 text-sm">Lore imp sum dolor Amit</p>
         </div>
       </div>
 
       {/* Alt Kısım */}
-      <div className="flex justify-center bg-secondary-gray p-5">
-        <p className="w-3/5 text-center text-primary font-bold">
+      <div className="flex max-md:justify-center  bg-secondary-gray p-5">
+        <p className="w-3/5 text-left pl-5 max-md:text-center text-primary font-bold text-sm">
           Made With Love By Finland All Right Reserved
         </p>
       </div>

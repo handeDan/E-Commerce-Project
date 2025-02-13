@@ -2,11 +2,11 @@ import React from "react";
 
 function ProductCard({ item }) {
   return (
-    <div className="w-1/4">
+    <div className="w-1/5 min-w-[200px]">
       <img
         src={item.image}
         alt={item.title}
-        className="my-5 px-10 max-h-full"
+        className="mb-5 max-h-full h-[300px]"
       />
       <div className="text-center">
         <p className="text-primary-dark font-bold mb-2">{item.title}</p>

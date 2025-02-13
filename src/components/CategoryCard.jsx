@@ -1,10 +1,16 @@
 import React from "react";
 
-function CategoryCard({ item }) {
+function CategoryCard({ item, size }) {
   return (
-    <div>
+    <div className="w-full">
       <div
-        className="my-5 mx-10 h-96 flex justify-start items-end bg-no-repeat"
+        className={`relative flex justify-center items-end bg-no-repeat bg-cover ${
+          size === "large"
+            ? "w-full h-[400px]"
+            : size === "x-large"
+            ? "w-full h-[400px]" // x-large boyutu için height
+            : "w-full h-[200px]"
+        }`}
         style={{ backgroundImage: `url(${item.image})` }}
       >
         <button className="bg-white px-16 py-3 ml-5 mb-5 text-primary-dark font-bold">
