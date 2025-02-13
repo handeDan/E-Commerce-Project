@@ -16,7 +16,7 @@ function ProductCategoryList() {
           Problems trying to resolve the conflict between
         </p>
       </div>
-      <div className="mb-20">
+      <div className="mb-20 flex flex-wrap justify-center mx-48">
         {productList.map((item, key) => (
           <ProductCard key={key} item={item} />
         ))}

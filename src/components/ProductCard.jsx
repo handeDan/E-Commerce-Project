@@ -2,8 +2,12 @@ import React from "react";
 
 function ProductCard({ item }) {
   return (
-    <div>
-      <img src={item.image} alt={item.title} className="my-5 px-10" />
+    <div className="w-1/4">
+      <img
+        src={item.image}
+        alt={item.title}
+        className="my-5 px-10 max-h-full"
+      />
       <div className="text-center">
         <p className="text-primary-dark font-bold mb-2">{item.title}</p>
         <p className="text-primary font-bold mb-2">{item.description}</p>
