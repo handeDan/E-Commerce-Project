@@ -1,9 +1,10 @@
 import React from "react";
+import Banner from "../components/ShopPage/Banner";
 
 function ShopPage() {
   return (
     <div>
-      <h1>Shop Page</h1>
+      <Banner />
     </div>
   );
 }
