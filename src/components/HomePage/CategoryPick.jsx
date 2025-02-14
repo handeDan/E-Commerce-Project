@@ -1,6 +1,6 @@
 import React from "react";
 import CategoryCard from "./CategoryCard";
-import { categoryList } from "../../public/data";
+import { categoryList } from "../../../public/data";
 
 function CategoryPick() {
   return (

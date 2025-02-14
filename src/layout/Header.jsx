@@ -13,6 +13,7 @@ import {
   Heart,
   ChevronDown,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,16 @@ function Header() {
   };
 
   const [isList, setIsList] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/shop");
+  };
+
+  const goToHome = () => {
+    navigate("/");
+  };
 
   return (
     <div>
@@ -50,16 +61,25 @@ function Header() {
       <div>
         {/* mobilde görünmeyen kısım: */}
         <div className="hidden md:flex justify-between m-6 text-sm">
-          <img src="images/Bandage.svg" className="cursor-pointer" />
+          <img
+            src="images/Bandage.svg"
+            className="cursor-pointer"
+            onClick={goToHome}
+          />
           <div className="flex items-center gap-5 cursor-pointer">
-            <p className="font-medium hover:font-normal ">Home</p>
+            <p className="font-medium hover:font-normal" onClick={goToHome}>
+              Home
+            </p>
 
             <div
               className="relative"
               onMouseEnter={() => setIsList(true)}
               onMouseLeave={() => setIsList(false)}
             >
-              <div className="font-medium hover:font-normal cursor-pointer flex items-center gap-1">
+              <div
+                className="font-medium hover:font-normal cursor-pointer flex items-center gap-1"
+                onClick={handleClick}
+              >
                 Shop
                 <ChevronDown
                   className={`transition-transform duration-300 ${
@@ -70,8 +90,14 @@ function Header() {
 
               {/* Açılır Menü */}
               {isList && (
-                <nav className="absolute left-0 top-full bg-white shadow-lg z-50 p-5 w-full md:w-auto max-w-[300px] md:max-w-[500px] rounded-md">
-                  <div className="flex flex-col md:flex-row gap-6">
+                <nav
+                  className="absolute left-0 top-full bg-white shadow-lg z-50 p-5 w-full md:w-auto max-w-[300px] md:max-w-[500px] rounded-md"
+                  onClick={handleClick}
+                >
+                  <div
+                    className="flex flex-col md:flex-row gap-6"
+                    onClick={handleClick}
+                  >
                     <ul className="flex flex-col gap-4 text-primary font-medium cursor-pointer">
                       <p className="text-primary-dark font-bold">Kadın</p>
                       <p className="hover:text-secondary">Bags</p>
@@ -117,7 +143,11 @@ function Header() {
         </div>
         {/* mobilde görünen kısım: */}
         <div className="flex md:hidden justify-between m-6 text-sm">
-          <img src="images/Bandage.svg" />
+          <img
+            src="images/Bandage.svg"
+            className="cursor-pointer"
+            onClick={goToHome}
+          />
           <div className="flex gap-5 cursor-pointer">
             <UserRound />
             <Search />
@@ -128,9 +158,15 @@ function Header() {
       </div>
       <nav className={`${isOpen ? "block" : "hidden"} bg-white shadow-md`}>
         <ul className="flex flex-col items-center gap-6 pt-10 pb-20 text-3xl text-primary font-medium hover:font-normal cursor-pointer">
-          <li className="font-medium hover:font-normal ">Home</li>
-          <li className="font-medium hover:font-normal">Product</li>
-          <li className="font-medium hover:font-normal">Pricing</li>
+          <li className="font-medium hover:font-normal" onClick={goToHome}>
+            Home
+          </li>
+          <li className="font-medium hover:font-normal" onClick={handleClick}>
+            Product
+          </li>
+          <li className="font-medium hover:font-normal" onClick={handleClick}>
+            Pricing
+          </li>
           <li className="font-medium hover:font-normal">Contact</li>
         </ul>
       </nav>

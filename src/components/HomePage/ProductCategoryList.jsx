@@ -1,5 +1,5 @@
 import React from "react";
-import { productList } from "../../public/data";
+import { productList } from "../../../public/data";
 import ProductCard from "./ProductCard";
 
 function ProductCategoryList() {

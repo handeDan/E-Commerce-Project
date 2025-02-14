@@ -1,6 +1,6 @@
 import React from "react";
 import FeaturedPost from "./FeaturedPost";
-import { postList } from "../../public/data";
+import { postList } from "../../../public/data";
 
 function FeaturedPosts() {
   return (
