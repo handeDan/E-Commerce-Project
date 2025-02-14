@@ -17,17 +17,17 @@ function FeaturedPost({ item }) {
         <p className="text-primary font-medium">{item.description}</p>
         <div className="flex justify-between my-5">
           <div className="flex gap-2">
-            <AlarmClock className="text-secondary-blue" />
-            <p className="text-primary">{item.date}</p>
+            <AlarmClock className="text-secondary-blue w-5" />
+            <p className="text-primary text-sm">{item.date}</p>
           </div>
           <div className="flex gap-2">
-            <ChartLine className="text-secondary-green" />
-            <p className="text-primary">{item.comments}</p>
+            <ChartLine className="text-secondary-green w-5" />
+            <p className="text-primary text-sm">{item.comments}</p>
           </div>
         </div>
         <div className="flex gap-1">
-          <p className="text-primary font-bold">{item.link}</p>
-          <ChevronRight className="text-secondary-blue" />
+          <p className="text-primary font-bold text-sm">{item.link}</p>
+          <ChevronRight className="text-secondary-blue w-5" />
         </div>
       </div>
     </div>
