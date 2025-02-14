@@ -37,7 +37,7 @@ function Header() {
   return (
     <div>
       {/* mobilde görünmeyen kısım: */}
-      <div className="hidden md:flex bg-primary-dark justify-between items-center p-5 text-sm">
+      <div className="hidden md:flex bg-primary-dark justify-between items-center p-5 text-sm px-48">
         <div className="flex gap-3 hover:cursor-pointer">
           <Phone className="text-white h-5" />
           <p className="text-white font-bold">(225) 555-0118</p>
@@ -60,7 +60,7 @@ function Header() {
 
       <div>
         {/* mobilde görünmeyen kısım: */}
-        <div className="hidden md:flex justify-between m-6 text-sm">
+        <div className="hidden md:flex justify-between my-6 text-sm px-48">
           <img
             src="images/Bandage.svg"
             className="cursor-pointer"

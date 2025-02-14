@@ -5,17 +5,19 @@ function Footer() {
   return (
     <div>
       {/* Üst Kısım */}
-      <div className="flex max-md:flex-col justify-between p-10 bg-secondary-gray">
-        <img src="images/Bandage.svg" width={"108px"} />
-        <div className="flex justify-start mt-5 gap-5 text-secondary-blue">
-          <Facebook />
-          <Instagram />
-          <Twitter />
+      <div className="bg-secondary-gray">
+        <div className="flex max-md:flex-col justify-between p-10 bg-secondary-gray md:mx-48 shadow-sm">
+          <img src="images/Bandage.svg" width={"108px"} />
+          <div className="flex justify-start mt-5 gap-5 text-secondary-blue">
+            <Facebook />
+            <Instagram />
+            <Twitter />
+          </div>
         </div>
       </div>
 
       {/* Bilgi Bölümleri */}
-      <div className="p-10 flex max-md:flex-col gap-5 justify-between mt-10">
+      <div className="p-10 flex max-md:flex-col gap-5 justify-between mt-10 md:mx-48">
         {/* Company Info */}
         <div>
           <p className="font-bold text-primary-dark">Company Info</p>
@@ -86,7 +88,7 @@ function Footer() {
 
       {/* Alt Kısım */}
       <div className="flex max-md:justify-center  bg-secondary-gray p-5">
-        <p className="w-3/5 text-left pl-5 max-md:text-center text-primary font-bold text-sm">
+        <p className="w-3/5 text-left pl-5 max-md:text-center text-primary font-bold text-sm md:mx-48">
           Made With Love By Finland All Right Reserved
         </p>
       </div>

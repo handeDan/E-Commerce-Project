@@ -10,7 +10,7 @@ function ProductsList() {
           <ProductCard key={key} item={item} />
         ))}
       </div>
-      <div className="flex items-center justify-center mt-4 mb-20">
+      <div className="flex items-center justify-center mt-16 mb-20 md:mb-10">
         <button className="px-4 py-6 border rounded-l-md text-primary border-primary bg-gray-200 font-bold">
           First
         </button>
