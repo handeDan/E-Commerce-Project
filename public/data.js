@@ -133,3 +133,36 @@ export const postList = [
     link: "Learn More",
   },
 ];
+
+export const shopList = [
+  {
+    id: 1,
+    title: "CLOTHS",
+    description: "5 Items",
+    image: "/images/shopList/1.jpg",
+  },
+  {
+    id: 2,
+    title: "CLOTHS",
+    description: "5 Items",
+    image: "/images/shopList/2.jpg",
+  },
+  {
+    id: 3,
+    title: "CLOTHS",
+    description: "5 Items",
+    image: "/images/shopList/3.jpg",
+  },
+  {
+    id: 4,
+    title: "CLOTHS",
+    description: "5 Items",
+    image: "/images/shopList/4.jpg",
+  },
+  {
+    id: 5,
+    title: "CLOTHS",
+    description: "5 Items",
+    image: "/images/shopList/5.jpg",
+  },
+];
