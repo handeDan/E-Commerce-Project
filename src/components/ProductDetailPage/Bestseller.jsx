@@ -5,7 +5,7 @@ import BestsellerCard from "./BestsellerCard";
 function Bestseller() {
   return (
     <div className="bg-secondary-gray">
-      <div className="text-left mx-48 py-10">
+      <div className="text-left mx-48 py-10 max-md:mx-5 max-md:text-center">
         <p className="font-bold text-primary-dark text-2xl mb-5">
           BESTSELLER PRODUCTS
         </p>

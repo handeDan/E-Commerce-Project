@@ -2,9 +2,11 @@ import React from "react";
 
 function Description() {
   return (
-    <div className="mx-48">
-      <div className="flex gap-10 p-7 justify-center">
-        <p className="text-sm font-semibold text-primary">Description</p>
+    <div className="mx-48 max-md:mx-5">
+      <div className="flex gap-10 max-md:gap-5 max-md:px-0 p-7 justify-center">
+        <p className="text-sm font-semibold text-primary underline">
+          Description
+        </p>
         <p className="text-sm font-semibold text-primary">
           Additional Information
         </p>
@@ -14,9 +16,13 @@ function Description() {
         </p>
       </div>
       <hr />
-      <div className="flex gap-10 py-10">
-        <img src="/images/productDetail/4.png" alt="" className="w-1/3" />
-        <div className="flex flex-col gap-5 w-1/3">
+      <div className="flex max-md:flex-col gap-10 py-10">
+        <img
+          src="/images/productDetail/4.png"
+          alt=""
+          className="w-1/3 max-md:w-full"
+        />
+        <div className="flex flex-col gap-5 w-1/3 max-md:w-full">
           <p className="text-primary-dark font-bold text-xl">
             the quick fox jumps over{" "}
           </p>

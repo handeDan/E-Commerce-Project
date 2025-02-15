@@ -4,13 +4,12 @@ import React from "react";
 function ProductDetail() {
   return (
     <div className="bg-secondary-gray">
-      <div className="mx-48 flex gap-12 pb-10">
+      <div className="mx-48 flex max-md:mx-5 max-md:flex-col gap-12 pb-10">
         <div className="flex flex-col gap-5 w-1/2 ">
-          <div className="h-96 bg-[url('/images/productDetail/1.png')] bg-cover bg-center flex justify-between items-center">
+          <div className="h-96 bg-[url('/images/productDetail/1.png')] bg-cover bg-center flex justify-between items-center max-md:h-unset max-md:w-96">
             <button class=" bg-black/50 text-white p-3 rounded-full text-3xl">
               &lt;
             </button>
-
             <button class=" bg-black/50 text-white p-3 rounded-full text-3xl">
               &gt;
             </button>
@@ -20,7 +19,7 @@ function ProductDetail() {
             <img src="/images/productDetail/3.png" alt="" />
           </div>
         </div>
-        <div className="flex flex-col w-1/2 ">
+        <div className="flex flex-col w-1/2 max-md:w-full max-md:px-5">
           <p className="text-xl text-primary-dark mb-4">Floating Phone</p>
           <div className="flex items-center mb-4">
             <Star className="text-yellow-500 fill-yellow-500" />
