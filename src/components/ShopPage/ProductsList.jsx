@@ -1,11 +1,21 @@
 import React from "react";
 import { productList } from "../../../public/data";
 import ProductCard from "../HomePage/ProductCard";
+import { useNavigate } from "react-router-dom";
 
 function ProductsList() {
+  const navigate = useNavigate();
+
+  const goToProduct = () => {
+    navigate("/product");
+  };
+
   return (
     <div>
-      <div className="my-10 flex flex-wrap justify-center mx-48 max-md:mx-5 gap-4">
+      <div
+        className="my-10 flex flex-wrap justify-center mx-48 max-md:mx-5 gap-4 hover:cursor-pointer"
+        onClick={goToProduct}
+      >
         {productList.map((item, key) => (
           <ProductCard key={key} item={item} />
         ))}
