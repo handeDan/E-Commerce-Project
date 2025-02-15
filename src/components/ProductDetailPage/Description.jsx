@@ -14,7 +14,7 @@ function Description() {
         </p>
       </div>
       <hr />
-      <div className="flex gap-10 p-10">
+      <div className="flex gap-10 py-10">
         <img src="/images/productDetail/4.png" alt="" className="w-1/3" />
         <div className="flex flex-col gap-5 w-1/3">
           <p className="text-primary-dark font-bold text-xl">
