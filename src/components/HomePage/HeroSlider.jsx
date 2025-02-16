@@ -13,7 +13,7 @@ function HeroSlider() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/catalog");
+    navigate("/shop");
   };
   return (
     <div>

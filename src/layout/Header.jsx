@@ -34,6 +34,10 @@ function Header() {
     navigate("/");
   };
 
+  const goToContact = () => {
+    navigate("/contact");
+  };
+
   return (
     <div>
       {/* mobilde görünmeyen kısım: */}
@@ -119,7 +123,9 @@ function Header() {
 
             <p className="font-medium hover:font-normal ml-1">About</p>
             <p className="font-medium hover:font-normal">Blog</p>
-            <p className="font-medium hover:font-normal">Contact</p>
+            <p className="font-medium hover:font-normal" onClick={goToContact}>
+              Contact
+            </p>
             <div className="relative group flex ">
               <p className="font-medium hover:font-normal">Pages</p>
               <ChevronDown className="absolute left-full top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mr-15" />
@@ -167,7 +173,9 @@ function Header() {
           <li className="font-medium hover:font-normal" onClick={handleClick}>
             Pricing
           </li>
-          <li className="font-medium hover:font-normal">Contact</li>
+          <li className="font-medium hover:font-normal" onClick={goToContact}>
+            Contact
+          </li>
         </ul>
       </nav>
     </div>
