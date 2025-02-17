@@ -233,3 +233,60 @@ export const bestsellerList = [
     image: "/images/bestsellers/8.png",
   },
 ];
+
+export const teamList = [
+  {
+    id: 1,
+    image: "/images/team/p1.jpeg",
+    title: "Username",
+    description: "Profession",
+  },
+  {
+    id: 2,
+    image: "/images/team/p2.jpeg",
+    title: "Username",
+    description: "Profession",
+  },
+  {
+    id: 3,
+    image: "/images/team/p3.jpeg",
+    title: "Username",
+    description: "Profession",
+  },
+  {
+    id: 4,
+    image: "/images/team/p4.jpeg",
+    title: "Username",
+    description: "Profession",
+  },
+  {
+    id: 5,
+    image: "/images/team/p5.jpeg",
+    title: "Username",
+    description: "Profession",
+  },
+  {
+    id: 6,
+    image: "/images/team/p6.jpeg",
+    title: "Username",
+    description: "Profession",
+  },
+  {
+    id: 7,
+    image: "/images/team/p7.jpeg",
+    title: "Username",
+    description: "Profession",
+  },
+  {
+    id: 8,
+    image: "/images/team/p8.jpeg",
+    title: "Username",
+    description: "Profession",
+  },
+  {
+    id: 9,
+    image: "/images/team/p9.jpeg",
+    title: "Username",
+    description: "Profession",
+  },
+];
