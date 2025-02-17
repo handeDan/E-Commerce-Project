@@ -38,6 +38,10 @@ function Header() {
     navigate("/contact");
   };
 
+  const goToTeam = () => {
+    navigate("/team");
+  };
+
   return (
     <div>
       {/* mobilde görünmeyen kısım: */}
@@ -127,8 +131,9 @@ function Header() {
               Contact
             </p>
             <div className="relative group flex ">
-              <p className="font-medium hover:font-normal">Pages</p>
-              <ChevronDown className="absolute left-full top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mr-15" />
+              <p className="font-medium hover:font-normal" onClick={goToTeam}>
+                Team
+              </p>
             </div>
           </div>
           <div className="flex">
