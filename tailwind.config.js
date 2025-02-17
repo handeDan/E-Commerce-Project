@@ -22,6 +22,12 @@ export default {
           dark: "#252B42", //dark
           gray: "#FAFAFA", //light gray
         },
+        icons: {
+          fb: "#395185", //facebook
+          tw: "#55ACEE", //twitter
+          ln: "#0A66C2", //linkedin
+          ins: "#000000", //instagram
+        },
       },
     },
   },

@@ -4,7 +4,7 @@ import TeamCard from "./TeamCard";
 
 function TeamCards() {
   return (
-    <div className="flex flex-col my-16 max-md:mb-20">
+    <div className="flex flex-col mt-16 mb-0 max-md:mb-0">
       <p className="font-bold text-[40px] text-primary-dark text-center mb-16 max-md:mx-20 max-md:mb-10">
         Meet Our Team
       </p>
