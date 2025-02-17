@@ -4,7 +4,7 @@ import React from "react";
 function TeamCard({ item }) {
   return (
     <div className="w-1/4 min-w-[200px] max-md:w-full bg-white">
-      <img src={item.image} alt={item.title} className="" />
+      <img src={item.image} alt={item.title} />
       <div className="text-center p-5">
         <p className="text-primary-dark font-bold mb-2 text-base">
           {item.title}

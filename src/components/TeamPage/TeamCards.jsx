@@ -8,7 +8,7 @@ function TeamCards() {
       <p className="font-bold text-[40px] text-primary-dark text-center mb-16 max-md:mx-20 max-md:mb-10">
         Meet Our Team
       </p>
-      <div className="flex max-md:flex-col max-md:flex-wrap justify-center flex-wrap items-center gap-10 mx-48 max-md:mx-5">
+      <div className="flex max-md:flex-col max-md:flex-wrap justify-center items-center max-md:gap-10 gap-32 mx-48 max-md:mx-5">
         {teamList.map((item, key) => (
           <TeamCard key={key} item={item} />
         ))}
