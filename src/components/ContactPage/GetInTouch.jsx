@@ -3,7 +3,7 @@ import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 function GetInTouch() {
   return (
     <div>
-      <div className="mx-48 max-md:mx-20 flex max-md:flex-col w-fit bg-no-repeat bg-cover">
+      <div className="mx-48 my-10 max-md:mx-20 flex max-md:flex-col w-fit bg-no-repeat bg-cover">
         <div className="flex flex-col items-start gap-5 my-auto w-1/2 max-md:w-full">
           <p className="font-bold text-primary-dark text-base max-md:text-center max-md:w-full">
             CONTACT US
