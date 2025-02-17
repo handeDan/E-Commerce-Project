@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -15,13 +16,28 @@ export default function SignupPage() {
     formState: { errors, isSubmitting },
   } = useForm();
   const navigate = useNavigate();
-  const roles = [
-    { id: "customer", name: "Customer" },
-    { id: "admin", name: "Admin" },
-    { id: "store", name: "Store" },
-  ];
+  const [roles, setRoles] = useState([]);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await api.get("/roles");
+        setRoles(response.data);
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+    };
+    fetchRoles();
+  }, []);
 
   const onSubmit = async (data) => {
+    console.log(typeof data, data);
+    const form = new FormData();
+    form.append("name", data.name);
+    form.append("email", data.email);
+    form.append("password", data.password);
+    form.append("role_id", data.role_id);
+
     try {
       if (data.role_id === "store") {
         data.store = {
@@ -30,12 +46,14 @@ export default function SignupPage() {
           tax_no: data.store_tax_no,
           bank_account: data.store_bank_account,
         };
+        form.append("store", data.store);
+
         delete data.store_name;
         delete data.store_phone;
         delete data.store_tax_no;
         delete data.store_bank_account;
       }
-      await api.post("/signup", data);
+      await api.post("/signup", form);
       alert("You need to click the link in email to activate your account!");
       navigate(-1);
     } catch (error) {
@@ -83,12 +101,11 @@ export default function SignupPage() {
             <input
               type="password"
               className="w-full p-2 border rounded"
-              placeholder="At least 8 characters"
+              placeholder="at least 8 characters"
               {...register("password", {
                 required: true,
                 minLength: 8,
-                pattern:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
               })}
             />
             {errors.password && (
