@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: "https://workintech-fe-ecommerce.onrender.com",
 });
 
@@ -61,6 +61,10 @@ export default function SignupPage() {
     }
   };
 
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <div className="flex justify-center items-center py-7 bg-primary-dark">
       <div className="w-96 shadow-lg bg-white p-6 rounded-lg">
@@ -101,17 +105,17 @@ export default function SignupPage() {
             <input
               type="password"
               className="w-full p-2 border rounded"
-              placeholder="at least 8 characters"
+              placeholder="at least 6 characters"
               {...register("password", {
                 required: true,
-                minLength: 8,
+                minLength: 6,
                 pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
               })}
             />
             {errors.password && (
               <p className="text-red-500 text-sm">
-                Must be at least 8 characters and include uppercase/lowercase
-                letters, numbers and special characters.
+                Must be at least cters and include uppercase/lowercase letters,
+                numbers and special characters.
               </p>
             )}
           </div>
@@ -204,7 +208,12 @@ export default function SignupPage() {
           </p>
           <div className="flex gap-5">
             <p>Already have an account?</p>
-            <button className="text-secondary-blue underline">Login</button>
+            <button
+              className="text-secondary-blue underline"
+              onClick={goToLogin}
+            >
+              Login
+            </button>
           </div>
         </form>
       </div>
