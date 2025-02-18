@@ -61,6 +61,10 @@ export default function SignupPage() {
     }
   };
 
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <div className="flex justify-center items-center py-7 bg-primary-dark">
       <div className="w-96 shadow-lg bg-white p-6 rounded-lg">
@@ -204,7 +208,12 @@ export default function SignupPage() {
           </p>
           <div className="flex gap-5">
             <p>Already have an account?</p>
-            <button className="text-secondary-blue underline">Login</button>
+            <button
+              className="text-secondary-blue underline"
+              onClick={goToLogin}
+            >
+              Login
+            </button>
           </div>
         </form>
       </div>
