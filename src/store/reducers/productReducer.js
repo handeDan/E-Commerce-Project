@@ -6,7 +6,7 @@ import {
   SET_LIMIT,
   SET_OFFSET,
   SET_FILTER,
-} from "../actions/productActions";
+} from "../actions/productActions.js";
 
 // Initial States
 const initialProductState = {
@@ -20,7 +20,7 @@ const initialProductState = {
 };
 
 // Reducers
-const productReducer = (state = initialProductState, action) => {
+export const productReducer = (state = initialProductState, action) => {
   switch (action.type) {
     case SET_CATEGORIES:
       return { ...state, categories: action.payload };

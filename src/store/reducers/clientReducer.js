@@ -3,7 +3,7 @@ import {
   SET_ROLES,
   SET_THEME,
   SET_LANGUAGE,
-} from "../actions/clientActions";
+} from "../actions/clientActions.js";
 
 // Initial States
 const initialClientState = {
@@ -16,7 +16,7 @@ const initialClientState = {
 };
 
 // Reducers
-const clientReducer = (state = initialClientState, action) => {
+export const clientReducer = (state = initialClientState, action) => {
   switch (action.type) {
     case SET_USER:
       return { ...state, user: action.payload };

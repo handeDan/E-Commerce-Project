@@ -2,7 +2,7 @@ import {
   SET_CART,
   SET_PAYMENT,
   SET_ADDRESS,
-} from "../actions/shoppingCartActions";
+} from "../actions/shoppingCartActions.js";
 
 // Initial States
 const initialShoppingCartState = {
@@ -12,7 +12,10 @@ const initialShoppingCartState = {
 };
 
 // Reducers
-const shoppingCartReducer = (state = initialShoppingCartState, action) => {
+export const shoppingCartReducer = (
+  state = initialShoppingCartState,
+  action
+) => {
   switch (action.type) {
     case SET_CART:
       return { ...state, cart: action.payload };

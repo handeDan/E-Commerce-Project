@@ -1,7 +1,7 @@
 // Action Types
-const SET_CART = "SET_CART";
-const SET_PAYMENT = "SET_PAYMENT";
-const SET_ADDRESS = "SET_ADDRESS";
+export const SET_CART = "SET_CART";
+export const SET_PAYMENT = "SET_PAYMENT";
+export const SET_ADDRESS = "SET_ADDRESS";
 
 // Action Creators
 export const setCart = (cart) => ({ type: SET_CART, payload: cart });
