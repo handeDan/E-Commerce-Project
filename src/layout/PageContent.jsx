@@ -5,6 +5,7 @@ import ShopPage from "../pages/ShopPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import ContactPage from "../pages/ContactPage";
 import TeamPage from "../pages/TeamPage";
+import SignupPage from "../pages/SignupPage";
 
 const PageContent = () => {
   return (
@@ -16,6 +17,7 @@ const PageContent = () => {
           <Route path="/product" element={<ProductDetailPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/team" element={<TeamPage />} />
+          <Route path="/signup" element={<SignupPage />} />
         </Routes>
       </>
     </div>
