@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../store/actions/thunkActions.js";
 
@@ -13,12 +13,10 @@ const LoginPage = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const onSubmit = async (data) => {
     try {
-      await dispatch(loginUser(data));
-      navigate(location.state?.from || "/", { replace: true });
+      await dispatch(loginUser(data, navigate));
     } catch (error) {
       setError("email", { type: "manual", message: error.message });
     }
@@ -44,7 +42,7 @@ const LoginPage = () => {
               {...register("email", {
                 required: "Email is required",
                 pattern: {
-                  value: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/,
+                  value: /^[^\s@]+@[^\\s@]+\.[^\s@]+$/,
                   message: "Invalid email format",
                 },
               })}

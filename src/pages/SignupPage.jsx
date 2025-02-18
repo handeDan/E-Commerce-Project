@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: "https://workintech-fe-ecommerce.onrender.com",
 });
 

@@ -17,6 +17,8 @@ const initialClientState = {
 
 // Reducers
 export const clientReducer = (state = initialClientState, action) => {
+  console.log(state, action);
+
   switch (action.type) {
     case SET_USER:
       return { ...state, user: action.payload };

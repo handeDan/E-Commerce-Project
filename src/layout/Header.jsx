@@ -14,9 +14,17 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Header() {
+  const user = useSelector((state) => {
+    console.log(state, state.client.user.name);
+
+    return state.client.user;
+  });
+
   const [isOpen, setIsOpen] = useState(false);
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -144,15 +152,51 @@ function Header() {
               </p>
             </div>
           </div>
-          <div className="flex">
-            <UserRound className="text-secondary-blue font-bold cursor-pointer mr-2" />
-            <p
-              className="text-secondary-blue font-bold mr-5 lg:flex hidden cursor-pointer"
-              onClick={goToLogin}
+          <div className="flex items-center gap-2">
+            <div
+              className="ml-auto flex items-center gap-4 hover:cursor-pointer relative"
+              onMouseEnter={() => setShowAccountMenu(true)}
+              onMouseLeave={() => setShowAccountMenu(false)}
             >
-              Login
-            </p>
-            <p className="text-secondary-blue font-bold mr-5 lg:flex hidden cursor-pointer">
+              {user?.email ? (
+                <>
+                  <img
+                    src={user.avatar}
+                    alt="User Avatar"
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <span className="text-secondary-alert font-bold mr-3">
+                    {user.name}
+                  </span>
+
+                  {/* Açılır Menü */}
+                  {showAccountMenu && (
+                    <nav className="absolute left-0 top-full bg-white shadow-lg z-50 p-5 w-full md:w-auto min-w-[180px] md:max-w-[500px] rounded-md">
+                      <div className="flex flex-col md:flex-row gap-6">
+                        <ul className="flex flex-col gap-4 text-primary font-medium cursor-pointer">
+                          <p className="text-primary-light">Profile</p>
+                          <p className="text-primary hover:font-bold">
+                            Log out
+                          </p>
+                        </ul>
+                      </div>
+                    </nav>
+                  )}
+                </>
+              ) : (
+                <div>
+                  <UserRound className="text-secondary-blue font-bold cursor-pointer mr-2" />
+                  <p
+                    className="text-secondary-blue font-bold mr-5 lg:flex hidden cursor-pointer"
+                    onClick={goToLogin}
+                  >
+                    Login
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <p className="text-secondary-blue font-bold mr-3 lg:flex hidden cursor-pointer">
               /
             </p>
             <p
