@@ -58,7 +58,6 @@ function Header() {
   };
 
   const logout = () => {
-    alert(1);
     dispatch(setUser(null));
     localStorage.removeItem("token");
     navigate("/");
@@ -193,7 +192,7 @@ function Header() {
                   )}
                 </>
               ) : (
-                <div>
+                <div className="flex items-center">
                   <UserRound className="text-secondary-blue font-bold cursor-pointer mr-2" />
                   <p
                     className="text-secondary-blue font-bold mr-5 lg:flex hidden cursor-pointer"
@@ -268,7 +267,10 @@ function Header() {
                 </div>
               </>
             ) : (
-              <UserRound className="text-secondary-blue font-bold cursor-pointer mr-2" />
+              <UserRound
+                className="text-secondary-blue font-bold cursor-pointer mr-2"
+                onClick={goToLogin}
+              />
             )}
 
             <Search />
