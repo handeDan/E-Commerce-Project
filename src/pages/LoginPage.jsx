@@ -1,19 +1,27 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { loginUser } from "../store/actions/thunkActions.js";
 
 const LoginPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setError,
   } = useForm();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onSubmit = async (data) => {
-    await dispatch(loginUser(data));
-    navigate(-1 || "/");
+    try {
+      await dispatch(loginUser(data));
+      navigate(location.state?.from || "/", { replace: true });
+    } catch (error) {
+      setError("email", { type: "manual", message: error.message });
+    }
   };
 
   const goToSignup = () => {
@@ -35,22 +43,37 @@ const LoginPage = () => {
               placeholder="your e-mail"
               {...register("email", {
                 required: "Email is required",
-                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                pattern: {
+                  value: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/,
+                  message: "Invalid email format",
+                },
               })}
             />
-            {errors.email && <p>{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-500">{errors.email.message}</p>
+            )}
           </div>
+
           <div>
             <label className="block text-sm font-medium">Password</label>
             <input
               type="password"
               className="w-full p-2 border rounded"
               placeholder="at least 8 characters"
-              {...register("password", {
-                required: "Password is required",
-              })}
+              {...register("password", { required: "Password is required" })}
             />
-            {errors.password && <p>{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-red-500">{errors.password.message}</p>
+            )}
+          </div>
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              {...register("rememberMe")}
+              className="mr-2"
+            />
+            <label>Remember Me</label>
           </div>
 
           <button
@@ -61,19 +84,10 @@ const LoginPage = () => {
             {isSubmitting ? "Logging in..." : "Log in"}
           </button>
 
-          <label>
-            <input
-              type="checkbox"
-              {...register("rememberMe")}
-              className="mt-5"
-            />{" "}
-            Remember Me
-          </label>
-
           <div className="flex gap-5">
             <p>Don't have an account? </p>
             <button
-              type="submit"
+              type="button"
               onClick={goToSignup}
               className="text-secondary-blue underline"
             >
