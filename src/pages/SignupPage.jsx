@@ -105,17 +105,17 @@ export default function SignupPage() {
             <input
               type="password"
               className="w-full p-2 border rounded"
-              placeholder="at least 8 characters"
+              placeholder="at least 6 characters"
               {...register("password", {
                 required: true,
-                minLength: 8,
+                minLength: 6,
                 pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
               })}
             />
             {errors.password && (
               <p className="text-red-500 text-sm">
-                Must be at least 8 characters and include uppercase/lowercase
-                letters, numbers and special characters.
+                Must be at least cters and include uppercase/lowercase letters,
+                numbers and special characters.
               </p>
             )}
           </div>

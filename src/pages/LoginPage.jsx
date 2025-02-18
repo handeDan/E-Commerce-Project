@@ -57,7 +57,7 @@ const LoginPage = () => {
             <input
               type="password"
               className="w-full p-2 border rounded"
-              placeholder="at least 8 characters"
+              placeholder="at least 6 characters"
               {...register("password", { required: "Password is required" })}
             />
             {errors.password && (
