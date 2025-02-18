@@ -46,6 +46,10 @@ function Header() {
     navigate("/signup");
   };
 
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <div>
       {/* mobilde görünmeyen kısım: */}
@@ -142,7 +146,10 @@ function Header() {
           </div>
           <div className="flex">
             <UserRound className="text-secondary-blue font-bold cursor-pointer mr-2" />
-            <p className="text-secondary-blue font-bold mr-5 lg:flex hidden cursor-pointer">
+            <p
+              className="text-secondary-blue font-bold mr-5 lg:flex hidden cursor-pointer"
+              onClick={goToLogin}
+            >
               Login
             </p>
             <p className="text-secondary-blue font-bold mr-5 lg:flex hidden cursor-pointer">
