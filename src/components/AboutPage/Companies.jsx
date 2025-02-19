@@ -3,8 +3,8 @@ import Logos from "../ShopPage/Logos";
 
 function Companies() {
   return (
-    <div>
-      <div className="flex flex-col bg-secondary-gray items-center gap-5 pt-10 pb-5 text-center">
+    <div className="mt-10 pb-10 bg-secondary-gray">
+      <div className="flex flex-col items-center gap-5 pt-10 pb-5 text-center">
         <p className="text-[40px] font-bold text-primary-dark max-md:px-10">
           Big Companies Are Here
         </p>
