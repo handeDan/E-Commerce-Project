@@ -3,6 +3,7 @@ import Main from "../components/AboutPage/Main";
 import Description from "../components/AboutPage/Description";
 import Video from "../components/AboutPage/Video";
 import TeamCards from "../components/TeamPage/TeamCards";
+import Companies from "../components/AboutPage/Companies";
 
 function AboutPage() {
   return (
@@ -11,6 +12,7 @@ function AboutPage() {
       <Description />
       <Video />
       <TeamCards />
+      <Companies />
     </div>
   );
 }
