@@ -2,6 +2,7 @@ import React from "react";
 import Main from "../components/AboutPage/Main";
 import Description from "../components/AboutPage/Description";
 import Video from "../components/AboutPage/Video";
+import TeamCards from "../components/TeamPage/TeamCards";
 
 function AboutPage() {
   return (
@@ -9,6 +10,7 @@ function AboutPage() {
       <Main />
       <Description />
       <Video />
+      <TeamCards />
     </div>
   );
 }

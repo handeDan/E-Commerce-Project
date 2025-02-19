@@ -1,4 +1,5 @@
-import { Facebook, Instagram, Twitter } from "lucide-react";
+import { Linkedin } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
 import React from "react";
 
 function TeamCard({ item }) {
@@ -13,9 +14,25 @@ function TeamCard({ item }) {
           {item.description}
         </p>
         <div className="flex justify-center mt-5 gap-4 text-secondary-blue">
-          <Facebook />
-          <Instagram />
-          <Twitter />
+          {/* GitHub Linki */}
+          <a
+            href={item.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-800"
+          >
+            <FaGithub className="size-8" />
+          </a>
+
+          {/* LinkedIn Linki */}
+          <a
+            href={item.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-icons-ln text-white rounded-full p-1"
+          >
+            <Linkedin className="size-6" />
+          </a>
         </div>
       </div>
     </div>
