@@ -19,6 +19,7 @@ export default {
           green: "#23856D", //green
           light_green: "#2DC071", //light green
           alert: "#E77C40", //orange
+          danger: "#E74040", //red
           dark: "#252B42", //dark
           gray: "#FAFAFA", //light gray
         },
