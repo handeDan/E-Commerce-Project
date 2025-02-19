@@ -53,6 +53,10 @@ function Header() {
     navigate("/login");
   };
 
+  const goToAbout = () => {
+    navigate("/about");
+  };
+
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
@@ -146,7 +150,12 @@ function Header() {
               )}
             </div>
 
-            <p className="font-medium hover:font-normal ml-1">About</p>
+            <p
+              className="font-medium hover:font-normal ml-1"
+              onClick={goToAbout}
+            >
+              About
+            </p>
             <p className="font-medium hover:font-normal">Blog</p>
             <p className="font-medium hover:font-normal" onClick={goToContact}>
               Contact

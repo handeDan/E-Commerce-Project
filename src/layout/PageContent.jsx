@@ -7,6 +7,7 @@ import ContactPage from "../pages/ContactPage";
 import TeamPage from "../pages/TeamPage";
 import SignupPage from "../pages/SignupPage";
 import LoginPage from "../pages/LoginPage";
+import AboutPage from "../pages/AboutPage";
 
 const PageContent = () => {
   return (
@@ -20,6 +21,7 @@ const PageContent = () => {
           <Route path="/team" element={<TeamPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
       </>
     </div>
