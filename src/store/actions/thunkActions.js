@@ -41,8 +41,6 @@ export const loginUser = (credentials, navigate) => async (dispatch) => {
 
       // Önceki sayfa yoksa anasayfaya yönlendir
       if (window.history.length > 2) {
-        navigate(-1); // Bir önceki sayfaya git
-      } else {
         navigate("/"); // Anasayfaya git
       }
     } else {

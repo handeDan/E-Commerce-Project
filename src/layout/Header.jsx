@@ -209,19 +209,19 @@ function Header() {
                   >
                     Login
                   </p>
+                  <p className="text-secondary-blue font-bold mr-3 lg:flex hidden cursor-pointer">
+                    /
+                  </p>
+                  <p
+                    className="text-secondary-blue font-bold mr-5 lg:flex hidden cursor-pointer"
+                    onClick={goToSignup}
+                  >
+                    Register
+                  </p>
                 </div>
               )}
             </div>
 
-            <p className="text-secondary-blue font-bold mr-3 lg:flex hidden cursor-pointer">
-              /
-            </p>
-            <p
-              className="text-secondary-blue font-bold mr-5 lg:flex hidden cursor-pointer"
-              onClick={goToSignup}
-            >
-              Register
-            </p>
             <Search className="text-secondary-blue cursor-pointer mr-5" />
             <div className="text-secondary-blue cursor-pointer mr-5 gap-2 flex">
               <ShoppingCart />
