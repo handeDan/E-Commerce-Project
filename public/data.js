@@ -240,12 +240,16 @@ export const teamList = [
     image: "/images/team/p0.jpeg",
     title: "Gökhan Özdemir",
     description: "Project Manager",
+    linkedin: "https://www.linkedin.com/in/gnozdemir/",
+    github: "https://github.com/gokhanozdemir",
   },
   {
     id: 1,
     image: "/images/team/p0-1.jpeg",
     title: "Hande Dan",
     description: "Full Stack Developer",
+    linkedin: "https://www.linkedin.com/in/hande-dan/",
+    github: "https://github.com/handeDan",
   },
   // {
   //   id: 1,
