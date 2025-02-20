@@ -1,14 +1,24 @@
-import React from "react";
-import { productList } from "../../../public/data";
+import React, { useEffect } from "react";
 import ProductCard from "../HomePage/ProductCard";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../store/actions/thunkActions";
 
 function ProductsList() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const goToProduct = () => {
     navigate("/product");
   };
+
+  useEffect(() => {
+    dispatch(fetchProducts);
+  }, []);
+
+  const products = useSelector((state) => {
+    return state.product.productList.products;
+  });
 
   return (
     <div>
@@ -16,9 +26,11 @@ function ProductsList() {
         className="my-10 flex flex-wrap justify-center mx-48 max-md:mx-5 gap-4 hover:cursor-pointer"
         onClick={goToProduct}
       >
-        {productList.map((item, key) => (
-          <ProductCard key={key} item={item} />
-        ))}
+        {(products || [])
+          .map((i) => ({ ...i, image: i.images[0].url }))
+          .map((item, key) => (
+            <ProductCard key={key} item={item} />
+          ))}
       </div>
       <div className="flex items-center justify-center mt-16 mb-20 md:mb-10">
         <button className="px-4 py-6 border rounded-l-md text-primary border-primary bg-gray-200 font-bold">

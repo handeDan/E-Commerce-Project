@@ -1,7 +1,7 @@
 import { setUser } from "../actions/clientActions.js";
 import { toast } from "react-toastify";
 import { api } from "../../pages/SignupPage.jsx";
-import { setCategories } from "./productActions.js";
+import { setCategories, setProductList } from "./productActions.js";
 
 export const fetchRolesIfNeeded = () => async (dispatch, getState) => {
   if (getState().client.roles.length === 0) {
@@ -67,6 +67,22 @@ export const fetchCategories = async (dispatch) => {
     const data = response.data;
     if (response.status === 200) {
       dispatch(setCategories(data));
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    toast.error(error.message);
+    throw error; // Prevent navigation on failure
+  }
+};
+
+// Thunk Action Creater for getting products
+export const fetchProducts = async (dispatch) => {
+  try {
+    const response = await api.get("/products");
+    const data = response.data;
+    if (response.status === 200) {
+      dispatch(setProductList(data));
     } else {
       throw new Error(data.message);
     }
