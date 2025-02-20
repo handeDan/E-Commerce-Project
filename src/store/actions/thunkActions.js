@@ -43,3 +43,22 @@ export const loginUser = (credentials, navigate) => async (dispatch) => {
     throw error; // Prevent navigation on failure
   }
 };
+
+//Thunk Action for fetching token
+export const fetchToken = async (dispatch) => {
+  try {
+    const token = localStorage.getItem("token"); // Token'ı güvenli bir şekilde al
+
+    if (!token) {
+      return;
+    }
+
+    const response = await api.get("/verify", {
+      headers: { Authorization: token },
+    });
+
+    dispatch(setUser(response.data)); // Redux store'a kullanıcıyı kaydet
+  } catch (error) {
+    console.error("Error fetching user:", error);
+  }
+};
