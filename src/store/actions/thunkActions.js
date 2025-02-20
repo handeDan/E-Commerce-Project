@@ -1,7 +1,7 @@
 import { setUser } from "../actions/clientActions.js";
 import { toast } from "react-toastify";
-import md5 from "md5";
 import { api } from "../../pages/SignupPage.jsx";
+import { setCategories } from "./productActions.js";
 
 export const fetchRolesIfNeeded = () => async (dispatch, getState) => {
   if (getState().client.roles.length === 0) {
@@ -31,10 +31,7 @@ export const loginUser = (credentials, navigate) => async (dispatch) => {
         localStorage.setItem("token", data.token);
       }
 
-      // Önceki sayfa yoksa anasayfaya yönlendir
-      //if (window.history.length > 2) {
       navigate("/"); // Anasayfaya git
-      //}
     } else {
       throw new Error(data.message);
     }
@@ -60,5 +57,21 @@ export const fetchToken = async (dispatch) => {
     dispatch(setUser(response.data)); // Redux store'a kullanıcıyı kaydet
   } catch (error) {
     console.error("Error fetching user:", error);
+  }
+};
+
+// Thunk Action for fetching categories
+export const fetchCategories = async (dispatch) => {
+  try {
+    const response = await api.get("/categories");
+    const data = response.data;
+    if (response.status === 200) {
+      dispatch(setCategories(data));
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    toast.error(error.message);
+    throw error; // Prevent navigation on failure
   }
 };
