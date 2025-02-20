@@ -1,3 +1,4 @@
+import md5 from "md5";
 import {
   SET_USER,
   SET_ROLES,
@@ -17,11 +18,22 @@ const initialClientState = {
 
 // Reducers
 export const clientReducer = (state = initialClientState, action) => {
-  console.log(state, action);
-
   switch (action.type) {
     case SET_USER:
-      return { ...state, user: action.payload };
+      const data = action.payload;
+      if (!data) {
+        return { ...state, user: null };
+      }
+      const gravatarUrl = `https://www.gravatar.com/avatar/${md5(
+        data.email.trim().toLowerCase()
+      )}?d=identicon`;
+
+      const userWithAvatar = {
+        name: data.name,
+        email: data.email,
+        avatar: gravatarUrl,
+      };
+      return { ...state, user: userWithAvatar };
     case SET_ROLES:
       return { ...state, roles: action.payload };
     case SET_THEME:
