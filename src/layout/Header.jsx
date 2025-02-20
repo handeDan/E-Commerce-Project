@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   UserRound,
   Search,
@@ -13,9 +13,10 @@ import {
   Heart,
   ChevronDown,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../store/actions/clientActions";
+import { fetchCategories } from "../store/actions/thunkActions";
 
 function Header() {
   const user = useSelector((state) => {
@@ -28,6 +29,14 @@ function Header() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories);
+  }, []);
+
+  const categories = useSelector((state) => {
+    return state.product.categories;
+  });
 
   const handleClick = () => {
     navigate("/shop");
@@ -66,7 +75,8 @@ function Header() {
     localStorage.removeItem("token");
     navigate("/");
   };
-
+  // Gender Mapping
+  const genderMapping = { k: "kadin", e: "erkek" };
   return (
     <div>
       {/* Mobilde görünmeyen kısım */}
@@ -123,28 +133,31 @@ function Header() {
 
               {/* Açılır Menü */}
               {isList && (
-                <nav
-                  className="absolute left-0 top-full bg-white shadow-lg z-50 p-5 w-full md:w-auto max-w-[300px] md:max-w-[500px] rounded-md"
-                  onClick={handleClick}
-                >
-                  <div
-                    className="flex flex-col md:flex-row gap-6"
-                    onClick={handleClick}
-                  >
-                    <ul className="flex flex-col gap-4 text-primary font-medium cursor-pointer">
-                      <p className="text-primary-dark font-bold">Kadın</p>
-                      <p className="hover:text-secondary">Bags</p>
-                      <p className="hover:text-secondary">Belts</p>
-                      <p className="hover:text-secondary">Cosmetics</p>
-                      <p className="hover:text-secondary">Hats</p>
-                    </ul>
-                    <ul className="flex flex-col gap-4 text-primary font-medium cursor-pointer">
-                      <p className="text-primary-dark font-bold">Erkek</p>
-                      <p className="hover:text-secondary">Bags</p>
-                      <p className="hover:text-secondary">Belts</p>
-                      <p className="hover:text-secondary">Cosmetics</p>
-                      <p className="hover:text-secondary">Hats</p>
-                    </ul>
+                <nav className="absolute left-0 top-full bg-white shadow-lg z-50 p-5 w-full md:w-auto max-w-[300px] md:max-w-[500px] rounded-md">
+                  <div className="flex flex-col md:flex-row gap-6">
+                    {["k", "e"].map((gender) => (
+                      <ul
+                        key={gender}
+                        className="flex flex-col gap-4 text-primary font-medium cursor-pointer"
+                      >
+                        <p className="text-primary-dark font-bold">
+                          {gender === "k" ? "Kadın" : "Erkek"}
+                        </p>
+                        {categories
+                          .filter((item) => item.gender === gender)
+                          .map((item) => (
+                            <Link
+                              key={item.id}
+                              to={`/shop/${
+                                genderMapping[item.gender]
+                              }/${item.title.toLowerCase()}/${item.id}`}
+                              className="hover:text-secondary"
+                            >
+                              {item.title}
+                            </Link>
+                          ))}
+                      </ul>
+                    ))}
                   </div>
                 </nav>
               )}
