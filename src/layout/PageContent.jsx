@@ -8,6 +8,7 @@ import TeamPage from "../pages/TeamPage";
 import SignupPage from "../pages/SignupPage";
 import LoginPage from "../pages/LoginPage";
 import AboutPage from "../pages/AboutPage";
+import ProductsList from "../components/ShopPage/ProductsList";
 
 const PageContent = () => {
   return (
@@ -16,6 +17,7 @@ const PageContent = () => {
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/*" element={<ProductsList />} />
           <Route path="/product" element={<ProductDetailPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/team" element={<TeamPage />} />

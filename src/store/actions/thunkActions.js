@@ -1,7 +1,7 @@
 import { setUser } from "../actions/clientActions.js";
 import { toast } from "react-toastify";
 import { api } from "../../pages/SignupPage.jsx";
-import { setCategories } from "./productActions.js";
+import { setCategories, setProductList } from "./productActions.js";
 
 export const fetchRolesIfNeeded = () => async (dispatch, getState) => {
   if (getState().client.roles.length === 0) {
@@ -75,3 +75,36 @@ export const fetchCategories = async (dispatch) => {
     throw error; // Prevent navigation on failure
   }
 };
+
+// Thunk Action Creater for getting products
+export const fetchProducts = (query) => async (dispatch) => {
+  let url = "/products";
+  if (query && query["*"]) {
+    let urlParts = [];
+    const tmp = query["*"].split("/");
+    if (tmp.length) {
+      url += "?";
+      if (tmp[2]) {
+        urlParts.push("category=" + tmp[2]);
+      }
+      if (tmp[3]) {
+        url += "sort=" + tmp[3];
+      }
+      url += urlParts.join("&");
+    }
+  }
+  try {
+    const response = await api.get(url);
+    const data = response.data;
+    if (response.status === 200) {
+      dispatch(setProductList(data));
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    toast.error(error.message);
+    throw error; // Prevent navigation on failure
+  }
+};
+
+///products?category=2&filter=siyah&sort=price:desc
