@@ -77,34 +77,33 @@ export const fetchCategories = async (dispatch) => {
 };
 
 // Thunk Action Creater for getting products
-export const fetchProducts = (query) => async (dispatch) => {
-  let url = "/products";
-  if (query && query["*"]) {
-    let urlParts = [];
-    const tmp = query["*"].split("/");
-    if (tmp.length) {
-      url += "?";
-      if (tmp[2]) {
-        urlParts.push("category=" + tmp[2]);
-      }
-      if (tmp[3]) {
-        url += "sort=" + tmp[3];
-      }
-      url += urlParts.join("&");
+// Thunk Action Creator for getting products
+export const fetchProducts =
+  (query = {}) =>
+  async (dispatch) => {
+    let url = "/products";
+    const queryParams = new URLSearchParams();
+
+    if (query.category) queryParams.append("category", query.category);
+    if (query.filter) queryParams.append("filter", query.filter);
+    if (query.sort) queryParams.append("sort", query.sort);
+
+    if ([...queryParams].length > 0) {
+      url += "?" + queryParams.toString();
     }
-  }
-  try {
-    const response = await api.get(url);
-    const data = response.data;
-    if (response.status === 200) {
-      dispatch(setProductList(data));
-    } else {
-      throw new Error(data.message);
+
+    try {
+      const response = await api.get(url);
+      const data = response.data;
+      if (response.status === 200) {
+        dispatch(setProductList(data));
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+      throw error;
     }
-  } catch (error) {
-    toast.error(error.message);
-    throw error; // Prevent navigation on failure
-  }
-};
+  };
 
 ///products?category=2&filter=siyah&sort=price:desc
