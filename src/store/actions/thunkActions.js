@@ -77,17 +77,32 @@ export const fetchCategories = async (dispatch) => {
 };
 
 // Thunk Action Creater for getting products
-export const fetchProducts = async (dispatch) => {
-  try {
-    const response = await api.get("/products");
-    const data = response.data;
-    if (response.status === 200) {
-      dispatch(setProductList(data));
-    } else {
-      throw new Error(data.message);
+export const fetchProducts =
+  (query = {}) =>
+  async (dispatch) => {
+    let url = "/products";
+    const queryParams = new URLSearchParams();
+
+    if (query.category) queryParams.append("category", query.category);
+    if (query.filter) queryParams.append("filter", query.filter);
+    if (query.sort) queryParams.append("sort", query.sort);
+
+    if ([...queryParams].length > 0) {
+      url += "?" + queryParams.toString();
     }
-  } catch (error) {
-    toast.error(error.message);
-    throw error; // Prevent navigation on failure
-  }
-};
+
+    try {
+      const response = await api.get(url);
+      const data = response.data;
+      if (response.status === 200) {
+        dispatch(setProductList(data));
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+      throw error;
+    }
+  };
+
+///products?category=2&filter=siyah&sort=price:desc

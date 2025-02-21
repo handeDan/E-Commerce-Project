@@ -1,16 +1,21 @@
 import React, { useEffect } from "react";
 import ProductCard from "../HomePage/ProductCard";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../store/actions/thunkActions";
 
 function ProductsList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
-  const goToProduct = () => {
-    navigate("/product");
-  };
+  useEffect(() => {
+    const queryObj = Object.fromEntries(params.entries());
+    dispatch(fetchProducts(queryObj));
+  }, [location.search]); // URL değiştiğinde yeniden yükle
+
+  const products = useSelector((state) => state.product.productList.products);
 
   useEffect(() => {
     dispatch(fetchProducts);
@@ -30,7 +35,7 @@ function ProductsList() {
         <>
           <div
             className="my-10 flex flex-wrap justify-center mx-48 max-md:mx-5 gap-4 hover:cursor-pointer"
-            onClick={goToProduct}
+            onClick={() => navigate("/product")}
           >
             {(products || [])
               .map((i) => ({ ...i, image: i.images[0].url }))
