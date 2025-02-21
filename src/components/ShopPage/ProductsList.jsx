@@ -17,6 +17,14 @@ function ProductsList() {
 
   const products = useSelector((state) => state.product.productList.products);
 
+  useEffect(() => {
+    dispatch(fetchProducts);
+  }, []);
+
+  const products = useSelector((state) => {
+    return state.product.productList.products;
+  });
+
   return (
     <div>
       {!products ? ( // Yükleniyor durumunda spinner göster

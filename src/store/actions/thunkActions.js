@@ -77,7 +77,6 @@ export const fetchCategories = async (dispatch) => {
 };
 
 // Thunk Action Creater for getting products
-// Thunk Action Creator for getting products
 export const fetchProducts =
   (query = {}) =>
   async (dispatch) => {
