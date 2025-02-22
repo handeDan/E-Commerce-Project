@@ -15,8 +15,6 @@ function ProductsList() {
     dispatch(fetchProducts(queryObj));
   }, [location.search]); // URL değiştiğinde yeniden yükle
 
-  const products = useSelector((state) => state.product.productList.products);
-
   useEffect(() => {
     dispatch(fetchProducts);
   }, []);
