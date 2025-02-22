@@ -15,6 +15,7 @@ function ProductsList() {
   const [page, setPage] = useState(Number(params.get("page")) || 1);
 
   useEffect(() => {
+    // Sayfa değiştiğinde offset'i yeniden hesapla
     const offset = (page - 1) * LIMIT;
     dispatch(fetchProducts({ limit: LIMIT, offset }));
   }, [dispatch, page]);
@@ -25,8 +26,15 @@ function ProductsList() {
 
   const handlePageChange = (newPage) => {
     if (newPage < 1) return;
+
+    // Offset'i dinamik olarak hesapla
+    const offset = (newPage - 1) * LIMIT;
     setPage(newPage);
-    params.set("page", newPage);
+
+    // URL parametrelerini güncelle
+    params.set("limit", LIMIT);
+    params.set("offset", offset); // Offset parametresi ekleniyor
+
     navigate(`?${params.toString()}`);
   };
 
