@@ -87,6 +87,10 @@ export const fetchProducts =
     if (query.filter) queryParams.append("filter", query.filter);
     if (query.sort) queryParams.append("sort", query.sort);
 
+    // LIMIT ve OFFSET EKLENİYOR 🚀
+    queryParams.append("limit", query.limit || 8);
+    queryParams.append("offset", query.offset || 0);
+
     if ([...queryParams].length > 0) {
       url += "?" + queryParams.toString();
     }
