@@ -17,7 +17,7 @@ function ProductsList() {
   }, []);
 
   const products = useSelector((state) => {
-    return state.product.productList.products;
+    return state.product.productList?.products;
   });
 
   return (
