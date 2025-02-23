@@ -1,7 +1,11 @@
 import { setUser } from "../actions/clientActions.js";
 import { toast } from "react-toastify";
 import { api } from "../../pages/SignupPage.jsx";
-import { setCategories, setProductList } from "./productActions.js";
+import {
+  setCategories,
+  setDetailProduct,
+  setProductList,
+} from "./productActions.js";
 
 export const fetchRolesIfNeeded = () => async (dispatch, getState) => {
   if (getState().client.roles.length === 0) {
@@ -110,3 +114,14 @@ export const fetchProducts =
   };
 
 ///products?category=2&filter=siyah&sort=price:desc
+
+export const fetchProduct = (productId) => async (dispatch) => {
+  try {
+    dispatch({ type: "FETCH_PRODUCT_START" });
+    const response = await api.get(`/products/${productId}`);
+    dispatch(setDetailProduct(response.data));
+  } catch (error) {
+    toast.error("Ürün yüklenirken hata oluştu.");
+    dispatch({ type: "FETCH_PRODUCT_ERROR", error });
+  }
+};
