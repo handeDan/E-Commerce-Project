@@ -2,6 +2,7 @@ import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Banner from "./Banner";
 
 function ProductDetail({ product }) {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ function ProductDetail({ product }) {
   if (!product) return <p>Ürün bulunamadı</p>;
   return (
     <div className="bg-secondary-gray">
+      <Banner />
       <div className="mx-48 flex max-md:mx-5 max-md:flex-col gap-12 py-5">
         <div className="flex flex-col gap-5 w-1/2 ">
           <div

@@ -1,7 +1,10 @@
 import { ChevronRight } from "lucide-react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Banner() {
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className="py-10 gap-5 md:mx-48 mx-5 md:justify-between flex flex-col justify-center items-center">
@@ -10,7 +13,10 @@ function Banner() {
           Innovation tailored for you
         </p>
         <nav className="flex gap-5 pb-10">
-          <p className="text-primary-dark font-bold hover:cursor-pointer">
+          <p
+            className="text-primary-dark font-bold hover:cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             Home
           </p>
           <ChevronRight className="text-primary-light" />
