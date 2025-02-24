@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../HomePage/ProductCard";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct, fetchProducts } from "../../store/actions/thunkActions";
 import { setDetailProduct } from "../../store/actions/productActions";
@@ -12,6 +12,8 @@ function ProductsList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const usePrm = useParams();
+
   const params = new URLSearchParams(location.search);
   const products = useSelector(
     (state) => state.product.productList?.products || []
@@ -30,8 +32,9 @@ function ProductsList() {
   useEffect(() => {
     // Sayfa değiştiğinde offset'i yeniden hesapla
     const offset = (page - 1) * LIMIT;
-    dispatch(fetchProducts({ limit: LIMIT, offset }));
-  }, [dispatch, page]);
+    dispatch(setDetailProduct(null));
+    dispatch(fetchProducts({ limit: LIMIT, offset }, usePrm));
+  }, [dispatch, page, location.pathname]);
 
   useEffect(() => {
     // URL'deki "item:" kısmını kontrol et

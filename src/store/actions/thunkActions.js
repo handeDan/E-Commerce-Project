@@ -82,21 +82,31 @@ export const fetchCategories = async (dispatch) => {
 
 // Thunk Action Creater for getting products
 export const fetchProducts =
-  (query = {}) =>
+  (query = {}, usePrm) =>
   async (dispatch) => {
     let url = "/products";
-    const queryParams = new URLSearchParams();
-
-    if (query.category) queryParams.append("category", query.category);
-    if (query.filter) queryParams.append("filter", query.filter);
-    if (query.sort) queryParams.append("sort", query.sort);
-
     // LIMIT ve OFFSET EKLENİYOR 🚀
-    queryParams.append("limit", query.limit || 8);
-    queryParams.append("offset", query.offset || 0);
+    const limit = Number(query.limit || 8);
+    const offset = Number(query.offset || 0);
+    url += `?limit=${limit}&offset=${offset}&`;
 
-    if ([...queryParams].length > 0) {
-      url += "?" + queryParams.toString();
+    const queryParams = new URLSearchParams();
+    console.log(usePrm, queryParams);
+    if (usePrm) {
+      if (usePrm && usePrm["*"]) {
+        let urlParts = [];
+        const tmp = usePrm["*"].split("/");
+        if (tmp.length) {
+          url += "";
+          if (tmp[2]) {
+            urlParts.push("category=" + tmp[2]);
+          }
+          if (tmp[3]) {
+            url += "sort=" + tmp[3];
+          }
+          url += urlParts.join("&");
+        }
+      }
     }
 
     try {
