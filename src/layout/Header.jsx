@@ -13,12 +13,16 @@ import {
   Heart,
   ChevronDown,
 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../store/actions/clientActions";
 import { fetchCategories } from "../store/actions/thunkActions";
+import CartDropdown from "../components/CartPage/CartDropdown";
 
 function Header() {
+  const cart = useSelector((state) => state.shoppingCart.cart);
+  const [showCartDropdown, setShowCartDropdown] = useState(false);
+
   const user = useSelector((state) => {
     return state.client.user;
   });
@@ -236,9 +240,18 @@ function Header() {
             </div>
 
             <Search className="text-secondary-blue cursor-pointer mr-5" />
-            <div className="text-secondary-blue cursor-pointer mr-5 gap-2 flex">
+            <div
+              className="text-secondary-blue cursor-pointer mr-5 flex ml-auto items-center gap-2 hover:cursor-pointer relative"
+              onMouseEnter={() => setShowCartDropdown(true)}
+              onMouseLeave={() => setShowCartDropdown(false)}
+            >
               <ShoppingCart />
-              <p>1</p>
+              {cart.length > 0 && (
+                <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  {cart.length}
+                </span>
+              )}
+              {showCartDropdown && <CartDropdown />}
             </div>
             <div className="text-secondary-blue cursor-pointer mr-5 gap-2 flex">
               <Heart />
@@ -297,6 +310,12 @@ function Header() {
 
             <Search />
             <ShoppingCart />
+            {cart.length > 0 && (
+              <span className="absolute -top-1 -right-2 max-md:right-8 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {cart.length}
+              </span>
+            )}
+            {showCartDropdown && <CartDropdown />}
             <AlignRight onClick={toggleNavbar} />
           </div>
         </div>
