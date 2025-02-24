@@ -108,6 +108,12 @@ export const fetchProducts =
         }
       }
     }
+    if (query.filter) {
+      url += `filter=${query.filter}&`;
+    }
+    if (query.sort) {
+      url += `sort=${query.sort}&`;
+    }
 
     try {
       const response = await api.get(url);
