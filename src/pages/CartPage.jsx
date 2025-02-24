@@ -1,9 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCart } from "../store/actions/shoppingCartActions.js";
-import { Rocket, Trash2 } from "lucide-react";
+import { ArrowRight, Rocket, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.shoppingCart.cart);
   const dispatch = useDispatch();
 
@@ -41,18 +43,36 @@ const CartPage = () => {
 
   console.log(cart);
 
+  const subtotal = () =>
+    cart
+      .filter((item) => item.checked) // Sadece checked olanları al
+      .reduce((acc, item) => acc + item.count * item.product.price, 0);
+  const shipmentPrice = () => {
+    if (cart.length === 0) return "0,00 TL";
+    const totalAmount = cart
+      .filter((item) => item.checked)
+      .every((item) => item.count * item.product.price >= 150);
+    console.log(totalAmount, cart);
+
+    if (totalAmount) {
+      return "free";
+    } else {
+      return "29,99 TL";
+    }
+  };
+
   return (
-    <div className="container bg-secondary-gray">
-      <div className=" ml-48 max-w-3xl py-4">
-        <p className="text-black text-base">Sepetim ({cart.length} Ürün)</p>
+    <div className="bg-secondary-gray flex gap-10 justify-center">
+      <div className=" ml-48 py-4 flex-1 w-2/3">
+        <p className="text-black text-base">My Cart ({cart.length})</p>
         <p className="text-xs mt-1 mb-4 text-red-700 font-semibold">
-          150 ₺ ve üzeri ürünlerde kargo bedava!
+          Enjoy free shipping on purchases of 150TL and above!
         </p>
         <div className="flex flex-col gap-4">
           {cart.map((item) => (
             <div key={item.product.id}>
               <div className="flex gap-2 items-center text-xs p-1 bg-blue-50 border">
-                <p>Satıcı: </p>
+                <p>Seller: </p>
                 <p>Bandage</p>
                 <p className="bg-secondary-light_green text-white p-[4px] border rounded-lg">
                   {" "}
@@ -62,7 +82,7 @@ const CartPage = () => {
               {(item.count * item.product.price).toFixed(2) >= 150 && (
                 <div className="bg-green-50 border">
                   <p className="p-2 font-semibold text-xs text-center">
-                    Kargo Bedava!
+                    Free Shipping!
                   </p>
                 </div>
               )}
@@ -89,11 +109,11 @@ const CartPage = () => {
                       </p>
                       <p className="text-xs text-red-700 font-bold bg-red-50 p-1 max-w-fit flex gap-1">
                         <Rocket size={14} />
-                        {item.product.sell_count} tanesi satıldı
+                        {item.product.sell_count} items sold
                       </p>
                     </div>
                     <p className="text-secondary-alert font-bold">
-                      {(item.count * item.product.price).toFixed(2)} ₺
+                      {(item.count * item.product.price).toFixed(2)} TL
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -115,9 +135,9 @@ const CartPage = () => {
 
                   <button
                     onClick={() => handleRemove(item.product.id)}
-                    className="ml-4 p-1 bg-secondary-danger text-white rounded flex gap-2 text-xs items-center my-auto max-h-fit"
+                    className="ml-4 p-1  flex gap-2 text-xs items-center my-auto max-h-fit text-primary"
                   >
-                    <Trash2 size={14} /> Sil
+                    <Trash2 size={20} />
                   </button>
                 </div>
               </div>
@@ -126,14 +146,51 @@ const CartPage = () => {
         </div>
         <div className="mt-6 p-4 flex bg-gray-100 rounded-lg text-right justify-end items-center">
           <h3 className="text-base font-semibold">
-            Total Price:&nbsp;&nbsp;&nbsp;
+            Subtotal:&nbsp;&nbsp;&nbsp;
           </h3>
-          <div className="text-lg font-bold text-secondary-alert">
-            {cart
-              .filter((item) => item.checked) // Sadece checked olanları al
-              .reduce((acc, item) => acc + item.count * item.product.price, 0)
-              .toFixed(2)}{" "}
-            ₺
+          <div className="text-lg font-bold">{subtotal().toFixed(2)} TL</div>
+        </div>
+      </div>
+      <div className="mr-48 mt-20 flex flex-col gap-4 w-1/5">
+        <button
+          className="text-center bg-secondary-alert hover:bg-secondary-dark text-white py-2 px-4 rounded-md"
+          onClick={() => navigate("/shop")}
+        >
+          Continue shopping
+        </button>
+        <div className="border rounded-b-xl p-4">
+          <p className="text-black text-base font-bold mb-5">Order summary</p>
+          <div>
+            <div className="flex gap-8 justify-between mb-4">
+              <p className="text-xs">Subtotal </p>
+              <p className="text-sm font-bold">{subtotal().toFixed(2)} TL</p>
+            </div>
+            <div className="flex gap-8 justify-between mb-4">
+              <p className="text-xs">Shipping </p>
+              <p className="text-sm font-bold">29.99 TL</p>
+            </div>
+            {shipmentPrice() === "free" && (
+              <div className="flex gap-8 justify-between mb-4">
+                <p className="text-xs">Free Shipping over 150 TL </p>
+                <p className="text-sm text-secondary-light_green font-bold">
+                  -29.99 TL
+                </p>
+              </div>
+            )}
+            <hr />
+            <br />
+            <div className="flex gap-8 justify-between mb-4">
+              <p className="text-sm">Total </p>
+              <p className="text-sm text-secondary-alert font-bold">
+                {(
+                  subtotal() + (shipmentPrice() === "free" ? 0 : 29.99)
+                ).toFixed(2)}{" "}
+                TL
+              </p>
+            </div>
+            <button className="bg-secondary-alert hover:bg-secondary-dark text-white py-2 px-4 rounded-md w-full flex gap-2 items-center justify-center">
+              <p>Checkout</p> <ArrowRight size={16} />
+            </button>
           </div>
         </div>
       </div>

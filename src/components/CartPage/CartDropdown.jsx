@@ -7,10 +7,10 @@ function CartDropdown() {
 
   return (
     <div className="absolute right-0 top-full bg-white shadow-lg z-50 p-5 w-[320px] rounded-md border">
-      <p className="text-black font-bold mb-2">Sepetim ({cart.length} Ürün)</p>
+      <p className="text-black font-bold mb-2">My Cart ({cart.length})</p>
 
       {cart.length === 0 ? (
-        <p className="text-gray-500">Sepetiniz boş</p>
+        <p className="text-gray-500">Your cart is empty.</p>
       ) : (
         <div className="space-y-3 max-h-80 overflow-y-auto">
           {cart.map((item) => (
@@ -23,7 +23,8 @@ function CartDropdown() {
               <div className="flex-1">
                 <p className="text-sm font-semibold">{item.product.name}</p>
                 <p className="text-xs text-gray-500">
-                  Beden: {item.product.size || "Tek Ebat"} | Adet: {item.count}
+                  Size: {item.product.size || "Standard"} | Quantity:{" "}
+                  {item.count}
                 </p>
                 <p className="text-sm font-bold text-secondary-alert">
                   {item.product.price} TL
@@ -38,16 +39,16 @@ function CartDropdown() {
         <div className="mt-4 flex gap-2">
           <a
             href="/cart"
-            className="flex-1 text-center border py-2 rounded-md text-gray-600 hover:bg-gray-100"
+            className="flex-1 text-center border py-2 rounded-md border-secondary-alert text-secondary-alert font-bold hover:bg-gray-100"
             onClick={() => navigate("/cart")}
           >
-            Sepete Git
+            View Cart
           </a>
           <button
             className="flex-1 text-center bg-secondary-alert hover:bg-secondary-dark text-white py-2 rounded-md"
             onClick={() => navigate("/checkout")}
           >
-            Siparişi Tamamla
+            Checkout
           </button>
         </div>
       )}

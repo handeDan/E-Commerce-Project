@@ -10,7 +10,7 @@ function ProductDetail({ product }) {
     dispatch(addToCart(product));
   };
 
-  if (!product) return <p>Ürün bulunamadı</p>;
+  if (!product) return <p>Product not found</p>;
   return (
     <div className="bg-secondary-gray">
       <div className="mx-48 flex max-md:mx-5 max-md:flex-col gap-12 py-5">
@@ -56,7 +56,7 @@ function ProductDetail({ product }) {
             </p>
           </div>
           <p className="text-2xl text-primary-dark font-bold mb-2">
-            {product.price} ₺
+            {product.price} TL
           </p>
           <p className="text-sm font-bold text-primary mb-8">
             Availability :{" "}
