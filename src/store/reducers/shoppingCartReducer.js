@@ -3,11 +3,13 @@ import {
   SET_PAYMENT,
   SET_ADDRESS,
   ADD_TO_CART,
+  CLEAR_CART,
+  REMOVE_FROM_CART,
 } from "../actions/shoppingCartActions.js";
 
 // Initial States
 const initialShoppingCartState = {
-  cart: [],
+  cart: JSON.parse(localStorage.getItem("cart")) || [], // Sayfa yenilenince sepeti yükle
   payment: {},
   address: {},
 };
@@ -25,7 +27,18 @@ export const shoppingCartReducer = (
     case SET_ADDRESS:
       return { ...state, address: action.payload };
     case ADD_TO_CART:
-      return { ...state, cart: action.payload };
+      const updatedCart = [...state.cart, action.payload];
+      localStorage.setItem("cart", JSON.stringify(updatedCart)); // Güncellenmiş sepeti kaydet
+      return { ...state, cart: updatedCart };
+    case REMOVE_FROM_CART:
+      const filteredCart = state.cart.filter(
+        (item) => item.product.id !== action.payload
+      );
+      localStorage.setItem("cart", JSON.stringify(filteredCart));
+      return { ...state, cart: filteredCart };
+    case CLEAR_CART:
+      localStorage.removeItem("cart"); // Sepeti sıfırla
+      return { ...state, cart: [] };
     default:
       return state;
   }

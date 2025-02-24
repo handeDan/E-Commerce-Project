@@ -3,6 +3,8 @@ export const SET_CART = "SET_CART";
 export const SET_PAYMENT = "SET_PAYMENT";
 export const SET_ADDRESS = "SET_ADDRESS";
 export const ADD_TO_CART = "ADD_TO_CART";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const CLEAR_CART = "CLEAR_CART";
 
 // Action Creators
 export const setCart = (cart) => ({ type: SET_CART, payload: cart });
@@ -33,6 +35,9 @@ export const addToCart = (product) => {
       updatedCart = [...cart, { count: 1, checked: true, product }];
     }
 
-    dispatch(setCart(updatedCart)); // Güncellenmiş sepeti store'a gönder
+    // Güncellenmiş sepeti localStorage’a kaydet!
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+    dispatch(setCart(updatedCart));
   };
 };
