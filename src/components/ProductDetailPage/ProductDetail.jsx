@@ -79,9 +79,12 @@ function ProductDetail({ product }) {
                 Add to Cart
               </button>{" "}
               <div className="flex gap-3">
-                <Heart className="border border-primary rounded-full p-2 h-9 w-9 hover:cursor-pointer" />
-                <ShoppingCart className="border border-primary rounded-full p-2 h-9 w-9 hover:cursor-pointer" />
-                <Eye className="border border-primary rounded-full p-2 h-9 w-9 hover:cursor-pointer" />
+                <Heart className="border border-primary rounded-full p-2 h-9 w-9 hover:cursor-pointer hover:bg-red-600 hover:text-white" />
+                <ShoppingCart
+                  className="border border-primary rounded-full p-2 h-9 w-9 hover:cursor-pointer hover:bg-secondary-alert hover:text-white"
+                  onClick={handleAddToCart}
+                />
+                <Eye className="border border-primary rounded-full p-2 h-9 w-9 hover:cursor-pointer hover:bg-secondary-green hover:text-white" />
               </div>
             </div>
           </div>
