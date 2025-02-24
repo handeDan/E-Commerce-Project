@@ -1,46 +1,66 @@
 import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Banner from "./Banner";
 
-function ProductDetail() {
+function ProductDetail({ product }) {
+  const navigate = useNavigate();
+
+  if (!product) return <p>Ürün bulunamadı</p>;
   return (
     <div className="bg-secondary-gray">
-      <div className="mx-48 flex max-md:mx-5 max-md:flex-col gap-12 pb-10">
+      <Banner />
+      <div className="mx-48 flex max-md:mx-5 max-md:flex-col gap-12 py-5">
         <div className="flex flex-col gap-5 w-1/2 ">
-          <div className="h-96 bg-[url('/images/productDetail/1.png')] bg-cover bg-center flex justify-between items-center max-md:h-unset max-md:w-96">
-            <button class=" bg-black/50 text-white p-3 rounded-full text-3xl">
+          <div
+            style={{
+              backgroundPosition: "center",
+              backgroundImage: `url(${product.images[0].url})`,
+            }}
+            className="h-96 bg-cover bg-top flex justify-between items-center max-md:h-unset max-md:w-96"
+          >
+            <button className=" bg-black/50 text-white p-3 rounded-full text-3xl">
               &lt;
             </button>
-            <button class=" bg-black/50 text-white p-3 rounded-full text-3xl">
+            <button className=" bg-black/50 text-white p-3 rounded-full text-3xl">
               &gt;
             </button>
           </div>
           <div className="flex gap-3">
-            <img src="/images/productDetail/2.jpg" alt="" />
-            <img src="/images/productDetail/3.png" alt="" />
+            {product.images.map((image, index) => (
+              <div
+                key={index}
+                style={{
+                  backgroundPosition: "center",
+                  backgroundImage: `url(${image.url})`,
+                }}
+                alt={product.name}
+                className="w-1/2 h-[100px] image bg-cover bg-top"
+              />
+            ))}
           </div>
         </div>
         <div className="flex flex-col w-1/2 max-md:w-full max-md:px-5">
-          <p className="text-xl text-primary-dark mb-4">Floating Phone</p>
+          <p className="text-xl text-primary-dark mb-4">{product.name}</p>
           <div className="flex items-center mb-4">
             <Star className="text-yellow-500 fill-yellow-500" />
             <Star className="text-yellow-500 fill-yellow-500" />
             <Star className="text-yellow-500 fill-yellow-500" />
             <Star className="text-yellow-500 fill-yellow-500" />
             <Star className="text-yellow-500" />
-            <p className="text-sm font-bold text-primary ml-3">10 Reviews</p>
+            <p className="text-sm font-bold text-primary ml-3">
+              {product.rating}
+            </p>
           </div>
           <p className="text-2xl text-primary-dark font-bold mb-2">
-            $ 1,139.33
+            {product.price} ₺
           </p>
           <p className="text-sm font-bold text-primary mb-8">
             Availability :{" "}
             <span className="text-secondary-blue font-bold"> In Stock</span>
           </p>
-          <p className="text-primary mb-5 text-sm">
-            Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.
-            RELIT official consequent door ENIM RELIT Mollie. Excitation venial
-            consequent sent nostrum met.
-          </p>
+          <p className="text-primary mb-5 text-sm">{product.description}</p>
           <hr className="border-2" />
           <div className="flex justify-start gap-3 mt-5 mb-10 hover:cursor-pointer">
             <div className="border bg-secondary-blue w-7 h-7 rounded-full"></div>

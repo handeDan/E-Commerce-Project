@@ -146,15 +146,15 @@ function Header() {
                         {categories
                           .filter((item) => item.gender === gender)
                           .map((item) => (
-                            <Link
+                            <a
                               key={item.id}
-                              to={`/shop/${
+                              href={`/shop/${
                                 genderMapping[item.gender]
                               }/${item.title.toLowerCase()}/${item.id}`}
                               className="hover:text-secondary"
                             >
                               {item.title}
-                            </Link>
+                            </a>
                           ))}
                       </ul>
                     ))}

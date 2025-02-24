@@ -6,6 +6,9 @@ import {
   SET_LIMIT,
   SET_OFFSET,
   SET_FILTER,
+  SET_DETAIL_PRODUCT,
+  FETCH_PRODUCT_START,
+  FETCH_PRODUCT_ERROR,
 } from "../actions/productActions.js";
 
 // Initial States
@@ -17,6 +20,8 @@ const initialProductState = {
   offset: 0,
   filter: "",
   fetchState: "NOT_FETCHED",
+  detailProduct: null,
+  loading: false,
 };
 
 // Reducers
@@ -36,6 +41,12 @@ export const productReducer = (state = initialProductState, action) => {
       return { ...state, offset: action.payload };
     case SET_FILTER:
       return { ...state, filter: action.payload };
+    case SET_DETAIL_PRODUCT:
+      return { ...state, detailProduct: action.payload, loading: false };
+    case FETCH_PRODUCT_START:
+      return { ...state, loading: true };
+    case FETCH_PRODUCT_ERROR:
+      return { ...state, loading: false };
     default:
       return state;
   }

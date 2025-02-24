@@ -8,7 +8,7 @@ function Footer() {
       <div className="bg-secondary-gray">
         <div className="flex max-md:flex-col justify-between p-10 bg-secondary-gray md:mx-48 shadow-sm">
           <img src="images/Bandage.svg" width={"108px"} />
-          <div className="flex justify-start mt-5 gap-5 text-secondary-blue">
+          <div className="flex justify-start gap-5 text-secondary-blue">
             <Facebook />
             <Instagram />
             <Twitter />

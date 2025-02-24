@@ -1,8 +1,29 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function ProductCard({ item }) {
+  const categories = useSelector((state) => state.product.categories);
+
+  const navigate = useNavigate();
+  const handleClick = () => {
+    const foundCategory = categories.find((c) => c.id === item.category_id);
+
+    if (!foundCategory) {
+      navigate("/shop");
+      return;
+    }
+    const gender = foundCategory.gender;
+    window.scrollTo(0, 0);
+    navigate(
+      `/shop/${gender}/${foundCategory.title}/${item.category_id}/${item.name
+        .replace(/\s+/g, "-")
+        .toLowerCase()}/item:${item.id}`
+    );
+  };
+
   return (
-    <div className="w-1/5 min-w-[200px]">
+    <div className="w-1/5 min-w-[200px]" onClick={handleClick}>
       <img
         src={item.image}
         alt={item.title}
