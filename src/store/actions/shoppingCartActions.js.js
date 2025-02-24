@@ -23,6 +23,7 @@ export const addToCart = (product) => {
     const existingItem = cart.find((item) => item.product.id === product.id);
 
     let updatedCart;
+
     if (existingItem) {
       // Eğer ürün zaten sepette varsa, count değerini artır
       updatedCart = cart.map((item) =>
