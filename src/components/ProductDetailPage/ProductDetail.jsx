@@ -1,11 +1,14 @@
 import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Banner from "./Banner";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/actions/shoppingCartActions.js";
 
 function ProductDetail({ product }) {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
 
   if (!product) return <p>Ürün bulunamadı</p>;
   return (
@@ -71,7 +74,7 @@ function ProductDetail({ product }) {
             <div className="flex gap-5">
               <button
                 className="hover:bg-gray-500 border bg-secondary-blue text-white font-bold py-2 px-8 rounded-md"
-                onClick={() => navigate("/cart")}
+                onClick={handleAddToCart}
               >
                 Add to Cart
               </button>{" "}
