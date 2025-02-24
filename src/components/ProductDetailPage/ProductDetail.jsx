@@ -71,7 +71,7 @@ function ProductDetail({ product }) {
           <div>
             <div className="flex gap-5">
               <button className="hover:bg-gray-500 border bg-secondary-blue text-white font-bold py-2 px-8 rounded-md">
-                Select Options
+                Add to Cart
               </button>{" "}
               <div className="flex gap-3">
                 <Heart className="border border-primary rounded-full p-2 h-9 w-9 hover:cursor-pointer" />

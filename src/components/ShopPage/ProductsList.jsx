@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct, fetchProducts } from "../../store/actions/thunkActions";
 import { setDetailProduct } from "../../store/actions/productActions";
 import ProductDetail from "../ProductDetailPage/ProductDetail";
+import ProductDetailPage from "../../pages/ProductDetailPage";
 
 const LIMIT = 8;
 
@@ -70,7 +71,7 @@ function ProductsList() {
 
   return (
     <div>
-      {selectedProduct && <ProductDetail product={selectedProduct} />}
+      {selectedProduct && <ProductDetailPage product={selectedProduct} />}
       {!products.length ? (
         <div className="flex justify-center items-center min-h-screen">
           <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>

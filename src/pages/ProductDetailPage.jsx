@@ -5,12 +5,11 @@ import Description from "../components/ProductDetailPage/Description";
 import Bestseller from "../components/ProductDetailPage/Bestseller";
 import Logos from "../components/ShopPage/Logos";
 
-function ProductDetailPage() {
+function ProductDetailPage({ product }) {
   return (
     <div>
-      <Banner />
-      <ProductDetail />
-      <Description />
+      <ProductDetail product={product} />
+      <Description product={product} />
       <Bestseller />
       <Logos />
     </div>
