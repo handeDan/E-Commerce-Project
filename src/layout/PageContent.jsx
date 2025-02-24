@@ -9,6 +9,7 @@ import SignupPage from "../pages/SignupPage";
 import LoginPage from "../pages/LoginPage";
 import AboutPage from "../pages/AboutPage";
 import ProductsList from "../components/ShopPage/ProductsList";
+import CartPage from "../pages/CartPage";
 
 const PageContent = () => {
   return (
@@ -24,6 +25,7 @@ const PageContent = () => {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </>
     </div>

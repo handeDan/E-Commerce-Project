@@ -8,6 +8,7 @@ import Logos from "../components/ShopPage/Logos";
 function ProductDetailPage({ product }) {
   return (
     <div>
+      <Banner />
       <ProductDetail product={product} />
       <Description product={product} />
       <Bestseller />

@@ -10,7 +10,6 @@ function ProductDetail({ product }) {
   if (!product) return <p>Ürün bulunamadı</p>;
   return (
     <div className="bg-secondary-gray">
-      <Banner />
       <div className="mx-48 flex max-md:mx-5 max-md:flex-col gap-12 py-5">
         <div className="flex flex-col gap-5 w-1/2 ">
           <div
@@ -70,7 +69,10 @@ function ProductDetail({ product }) {
           </div>
           <div>
             <div className="flex gap-5">
-              <button className="hover:bg-gray-500 border bg-secondary-blue text-white font-bold py-2 px-8 rounded-md">
+              <button
+                className="hover:bg-gray-500 border bg-secondary-blue text-white font-bold py-2 px-8 rounded-md"
+                onClick={() => navigate("/cart")}
+              >
                 Add to Cart
               </button>{" "}
               <div className="flex gap-3">
