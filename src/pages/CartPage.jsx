@@ -4,7 +4,7 @@ import {
   REMOVE_FROM_CART,
   SET_CART,
 } from "../store/actions/shoppingCartActions.js";
-import { Trash2 } from "lucide-react";
+import { Rocket, Trash2 } from "lucide-react";
 
 const CartPage = () => {
   const cart = useSelector((state) => state.shoppingCart.cart);
@@ -43,11 +43,13 @@ const CartPage = () => {
   return (
     <div className="container bg-secondary-gray">
       <div className=" ml-48 max-w-3xl py-4">
-        <p className="text-black text-lg mb-4">Sepetim ({cart.length} Ürün)</p>
+        <p className="text-black text-base mb-4">
+          Sepetim ({cart.length} Ürün)
+        </p>
         <div className="flex flex-col gap-4">
           {cart.map((item) => (
             <div>
-              <div className="flex gap-2 items-center text-xs p-1 bg-blue-100 border">
+              <div className="flex gap-2 items-center text-xs p-1 bg-blue-50 border">
                 <p>Satıcı: </p>
                 <p>Bandage</p>
                 <p className="bg-secondary-light_green text-white p-[4px] border rounded-lg">
@@ -62,7 +64,7 @@ const CartPage = () => {
               </div>
               <div
                 key={item.product.id}
-                className="flex flex-col p-4 bg-white shadow-md rounded-lg"
+                className="flex flex-col p-4 bg-white shadow-md rounded-b-lg"
               >
                 <div className="flex">
                   <input
@@ -83,8 +85,16 @@ const CartPage = () => {
                     alt={item.product.name}
                     className="w-20 h-20 object-cover rounded-md"
                   />
-                  <div className="flex-1 flex flex-row justify-between ml-5 mr-10">
-                    <h3 className="font-semibold">{item.product.name}</h3>
+                  <div className="flex-1 flex flex-row justify-between items-center ml-5 mr-10">
+                    <div className="flex flex-col gap-2">
+                      <p className="font-semibold text-base">
+                        {item.product.name}
+                      </p>
+                      <p className="text-xs text-red-700 font-bold bg-red-50 p-1 max-w-fit flex gap-1">
+                        <Rocket size={14} />
+                        {item.product.sell_count} tanesi satıldı
+                      </p>
+                    </div>
                     <p className="text-secondary-alert font-bold">
                       {item.product.price} ₺
                     </p>
@@ -106,7 +116,7 @@ const CartPage = () => {
                   </div>
                   <button
                     onClick={() => handleRemove(item.product.id)}
-                    className="ml-4 p-1 bg-secondary-danger text-white rounded flex gap-2 text-xs"
+                    className="ml-4 p-1 bg-secondary-danger text-white rounded flex gap-2 text-xs items-center my-auto max-h-fit"
                   >
                     <Trash2 size={14} /> Sil
                   </button>
