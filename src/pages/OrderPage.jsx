@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import OrderSummary from "../components/CartPage/OrderSummary";
 import PlaceOrder from "../components/CartPage/PlaceOrder";
-import { CreditCard, MapPin } from "lucide-react";
+import { CreditCard, MapPin, UserRound } from "lucide-react";
 import ModalAddress from "../components/CartPage/ModalAddress";
+import { api } from "./SignupPage";
 
 const OrderPage = () => {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const OrderPage = () => {
       return;
     }
     axios
-      .get("/user/address", { headers: { Authorization: `Bearer ${token}` } })
+      .get("/user/address", { headers: { Authorization: ` ${token}` } })
       .then((res) => {
         if (res.data && Array.isArray(res.data.addresses)) {
           setAddresses(res.data.addresses);
@@ -53,18 +53,48 @@ const OrderPage = () => {
     setSelectedAddress(id);
   };
 
-  const handleAddAddress = () => {
+  const handleAddAddress = (newAddressData) => {
     const token = localStorage.getItem("token");
-    axios
-      .post("/user/address", newAddress, {
-        headers: { Authorization: `Bearer ${token}` },
+    axios;
+    api
+      .post("/user/address", newAddressData, {
+        headers: { Authorization: `${token}` },
       })
       .then((res) => {
-        setAddresses([...addresses, res.data]);
-        setShowForm(false);
+        console.log(res, res.data);
+        setAddresses([...addresses, res.data[0]]); // Yeni adresi state'e ekle
+        toggleModal(); // Modalı kapat
       })
       .catch((err) => console.error(err));
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("No token found, redirecting to login...");
+      navigate("/login");
+      return;
+    }
+
+    axios;
+    api
+      .get("/user/address", {
+        headers: { Authorization: `Bearer ${token}` }, // Ensure correct token format
+      })
+      .then((res) => {
+        if (res.data && Array.isArray(res.data.addresses)) {
+          setAddresses(res.data.addresses);
+        } else {
+          setAddresses([]);
+          console.warn("Received unexpected response format:", res.data);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching addresses:", err);
+        setAddresses([]);
+      });
+  }, []);
 
   return (
     <div className="p-6 min-h-screen bg-secondary-gray flex gap-10 justify-center pt-10">
@@ -98,36 +128,56 @@ const OrderPage = () => {
           <div className="bg-white p-4 rounded shadow">
             <h2 className="text-xl font-bold mb-4">Delivery address</h2>
             {addresses.length > 0 ? (
-              addresses.map((addr) => (
+              addresses.map((addr, index) => (
                 <div
-                  key={addr.id}
-                  className={`p-2 border rounded mb-2 ${
+                  key={index}
+                  className={`p-4 border rounded mb-2 ${
                     selectedAddress === addr.id ? "border-orange-500" : ""
                   }`}
                   onClick={() => handleSelectAddress(addr.id)}
                 >
-                  <p className="font-bold">{addr.title}</p>
-                  <p>
-                    {addr.name} {addr.surname}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-start gap-2">
+                      <input
+                        id="default-radio-1"
+                        type="radio"
+                        value=""
+                        name="default-radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      <p className="font-semibold">{addr.title}</p>
+                    </div>
+                    <a href="" className="underline font-semibold">
+                      Edit
+                    </a>
+                  </div>
+
+                  <p className="flex gap-2 items-center text-secondary-alert my-2 text-sm font-semibold">
+                    <UserRound size={14} /> {addr.name} {addr.surname}
                   </p>
-                  <p>{addr.phone}</p>
-                  <p>
+                  <p className="text-sm">{addr.phone}</p>
+                  <p className="font-medium my-2 text-sm">
                     {addr.city}, {addr.district}, {addr.neighborhood}
                   </p>
-                  <p>{addr.address}</p>
+                  <p className="font-medium text-sm">{addr.address}</p>
                 </div>
               ))
             ) : (
               <p className="text-gray-500">No saved addresses found.</p>
             )}
             <button
-              className="mt-2 text-primary-dark font-bold text-lg flex items-center gap-2 rounded-md border w-1/2 py-10 px-24 bg-secondary-gray hover:bg-white"
-              onClick={toggleModal}
+              className="mt-2 text-primary-dark font-bold text-sm flex items-center gap-2 rounded-md border w-full py-10 justify-center bg-secondary-gray hover:bg-white"
+              onClick={() => toggleModal()}
             >
-              <span className="text-secondary-alert font-bold text-4xl">+</span>{" "}
-              Add address
+              <span className="text-secondary-alert font-bold text-2xl">+</span>{" "}
+              Add new address
             </button>
-            {isModalOpen && <ModalAddress />}
+            {isModalOpen && (
+              <ModalAddress
+                toggleModal={toggleModal}
+                handleAddAddress={handleAddAddress}
+              />
+            )}
           </div>
         )}
 

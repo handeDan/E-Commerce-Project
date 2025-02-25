@@ -17,7 +17,6 @@ function PlaceOrder() {
     const totalAmount = cart
       .filter((item) => item.checked)
       .every((item) => item.count * item.product.price >= 150);
-    console.log(totalAmount, cart);
 
     if (totalAmount) {
       return "free";
