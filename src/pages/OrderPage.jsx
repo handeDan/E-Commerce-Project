@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import OrderSummary from "../components/CartPage/OrderSummary";
+import PlaceOrder from "../components/CartPage/PlaceOrder";
+import { CreditCard, MapPin } from "lucide-react";
+import ModalAddress from "../components/CartPage/ModalAddress";
 
-const OrderPage = ({ subtotal, cart, shipmentPrice }) => {
+const OrderPage = () => {
   const navigate = useNavigate();
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -17,8 +20,13 @@ const OrderPage = ({ subtotal, cart, shipmentPrice }) => {
     neighborhood: "",
     address: "",
   });
-  const [showForm, setShowForm] = useState(false);
+
   const [activeTab, setActiveTab] = useState("addresses");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -59,32 +67,36 @@ const OrderPage = ({ subtotal, cart, shipmentPrice }) => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen flex justify-between">
+    <div className="p-6 min-h-screen bg-secondary-gray flex gap-10 justify-center pt-10">
       <div className="ml-48 py-4 flex-1 w-2/3">
-        <div className="flex mb-4">
+        <div className="flex mb-4 shadow-md shadow-secondary-alert">
           <button
-            className={`px-4 py-2 ${
+            className={`px-4 py-4 w-full font-semibold flex gap-2 justify-center ${
               activeTab === "addresses"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-300"
+                ? "bg-secondary-alert text-white"
+                : "bg-gray-200"
             }`}
             onClick={() => setActiveTab("addresses")}
           >
-            Adres Bilgileri
+            <MapPin />
+            Address
           </button>
           <button
-            className={`px-4 py-2 ml-2 ${
-              activeTab === "payment" ? "bg-blue-500 text-white" : "bg-gray-300"
+            className={`px-4 py-4 w-full font-semibold flex gap-2 justify-center ${
+              activeTab === "payment"
+                ? "bg-secondary-alert text-white"
+                : "bg-gray-200"
             }`}
             onClick={() => setActiveTab("payment")}
           >
-            Ödeme Seçenekleri
+            <CreditCard />
+            Payment
           </button>
         </div>
 
         {activeTab === "addresses" && (
           <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-xl font-bold mb-4">Adres Bilgileri</h2>
+            <h2 className="text-xl font-bold mb-4">Delivery address</h2>
             {addresses.length > 0 ? (
               addresses.map((addr) => (
                 <div
@@ -106,45 +118,29 @@ const OrderPage = ({ subtotal, cart, shipmentPrice }) => {
                 </div>
               ))
             ) : (
-              <p className="text-gray-500">Kayıtlı adres bulunamadı.</p>
+              <p className="text-gray-500">No saved addresses found.</p>
             )}
             <button
-              className="mt-2 bg-blue-500 text-white py-1 px-3 rounded"
-              onClick={() => setShowForm(true)}
+              className="mt-2 text-primary-dark font-bold text-lg flex items-center gap-2 rounded-md border w-1/2 py-10 px-24 bg-secondary-gray hover:bg-white"
+              onClick={toggleModal}
             >
-              Yeni Adres Ekle
+              <span className="text-secondary-alert font-bold text-4xl">+</span>{" "}
+              Add address
             </button>
-
-            {showForm && (
-              <div className="mt-4 bg-white p-4 rounded shadow">
-                <h3 className="font-bold mb-2">Yeni Adres</h3>
-                <input
-                  type="text"
-                  placeholder="Adres Başlığı"
-                  className="border p-2 w-full mb-2"
-                  onChange={(e) =>
-                    setNewAddress({ ...newAddress, title: e.target.value })
-                  }
-                />
-                <button
-                  className="mt-2 bg-green-500 text-white py-1 px-3 rounded"
-                  onClick={handleAddAddress}
-                >
-                  Kaydet
-                </button>
-              </div>
-            )}
+            {isModalOpen && <ModalAddress />}
           </div>
         )}
 
         {activeTab === "payment" && (
           <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-xl font-bold mb-4">Ödeme Seçenekleri</h2>
+            <h2 className="text-xl font-bold mb-4">Payment</h2>
             <p>Ödeme seçenekleri buraya gelecek.</p>
           </div>
         )}
       </div>
-      <OrderSummary />
+      <div className="mr-48 mt-20 flex flex-col gap-4 w-1/5">
+        <PlaceOrder />
+      </div>
     </div>
   );
 };
