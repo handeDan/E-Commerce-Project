@@ -1,30 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import PlaceOrder from "../components/CartPage/PlaceOrder";
-import { CreditCard, MapPin, UserRound } from "lucide-react";
+import { CreditCard, MapPin, Trash2, UserRound } from "lucide-react";
 import ModalAddress from "../components/CartPage/ModalAddress";
 import { api } from "./SignupPage";
+import { useDispatch, useSelector } from "react-redux";
+import { setAddresses } from "../store/actions/clientActions.js";
 
 const OrderPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [addresses, setAddresses] = useState([]);
+
+  const addresses = useSelector((state) => state.client.addresses || []);
+  console.log("Addresses from store:", addresses);
   const [selectedAddress, setSelectedAddress] = useState(null);
-  const [newAddress, setNewAddress] = useState({
-    title: "",
-    name: "",
-    surname: "",
-    phone: "",
-    city: "",
-    district: "",
-    neighborhood: "",
-    address: "",
-  });
-
   const [activeTab, setActiveTab] = useState("addresses");
-
+  const [modalTitle, setModalTitle] = useState("Create New Address");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const toggleModal = () => {
+  const [selectedAddressEditing, setSelectedAddressEditing] = useState(null);
+  const toggleModal = (isNew = true, address = null) => {
+    console.log("toggleModal", isNew, address);
+
+    setSelectedAddressEditing(null);
+    if (isNew) {
+      setModalTitle("Create New Address");
+    } else {
+      setModalTitle("Update Address");
+      if (address) {
+        setSelectedAddressEditing(address);
+      }
+    }
     setIsModalOpen(!isModalOpen);
   };
 
@@ -34,67 +39,78 @@ const OrderPage = () => {
       navigate("/login");
       return;
     }
-    axios
-      .get("/user/address", { headers: { Authorization: ` ${token}` } })
+    api
+      .get("/user/address", { headers: { Authorization: token } })
       .then((res) => {
-        if (res.data && Array.isArray(res.data.addresses)) {
-          setAddresses(res.data.addresses);
+        console.log("Fetched Addresses:", res.data);
+        if (res.data) {
+          dispatch(setAddresses(res.data)); // Redux store'a adresleri ekle
         } else {
-          setAddresses([]);
+          dispatch(setAddresses([]));
         }
       })
       .catch((err) => {
         console.error(err);
-        setAddresses([]);
+        dispatch(setAddresses([]));
       });
-  }, [navigate]);
+  }, [dispatch]);
 
   const handleSelectAddress = (id) => {
     setSelectedAddress(id);
   };
 
-  const handleAddAddress = (newAddressData) => {
+  const handleAddAddress = (newAddressData, type) => {
+    if (type === "update") {
+      handleUpdateAddress(newAddressData);
+      return;
+    }
     const token = localStorage.getItem("token");
-    axios;
     api
       .post("/user/address", newAddressData, {
-        headers: { Authorization: `${token}` },
+        headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res, res.data);
-        setAddresses([...addresses, res.data[0]]); // Yeni adresi state'e ekle
-        toggleModal(); // Modalı kapat
+        dispatch(setAddresses([...addresses, res.data[0]])); // Yeni adresi Redux store'a ekle
+        toggleModal();
+      })
+      .catch((err) => console.error(err));
+  };
+  const handleUpdateAddress = (updatedAddressData) => {
+    const token = localStorage.getItem("token");
+    api
+      .put(
+        "/user/address",
+        { ...updatedAddressData, id: selectedAddressEditing.id },
+        {
+          headers: { Authorization: token },
+        }
+      )
+      .then((res) => {
+        dispatch(
+          setAddresses(
+            addresses.map((address) =>
+              address.id === updatedAddressData.id ? res.data : address
+            )
+          )
+        ); // Adres güncellemesini Redux store'a kaydet
+        toggleModal();
       })
       .catch((err) => console.error(err));
   };
 
-  useEffect(() => {
+  const handleDeleteAddress = (addressId) => {
     const token = localStorage.getItem("token");
-
-    if (!token) {
-      console.error("No token found, redirecting to login...");
-      navigate("/login");
-      return;
-    }
-
-    axios;
     api
-      .get("/user/address", {
-        headers: { Authorization: `Bearer ${token}` }, // Ensure correct token format
+      .delete("/user/address/" + addressId, {
+        headers: { Authorization: token },
       })
       .then((res) => {
-        if (res.data && Array.isArray(res.data.addresses)) {
-          setAddresses(res.data.addresses);
-        } else {
-          setAddresses([]);
-          console.warn("Received unexpected response format:", res.data);
-        }
+        dispatch(
+          setAddresses(addresses.filter((address) => address.id !== addressId))
+        ); // Adres güncellemesini Redux store'a kaydet
       })
-      .catch((err) => {
-        console.error("Error fetching addresses:", err);
-        setAddresses([]);
-      });
-  }, []);
+      .catch((err) => console.error(err));
+  };
 
   return (
     <div className="p-6 min-h-screen bg-secondary-gray flex gap-10 justify-center pt-10">
@@ -143,13 +159,23 @@ const OrderPage = () => {
                         type="radio"
                         value=""
                         name="default-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
                       <p className="font-semibold">{addr.title}</p>
                     </div>
-                    <a href="" className="underline font-semibold">
-                      Edit
-                    </a>
+                    <div className="flex justify-end gap-5">
+                      <a
+                        href="#"
+                        className="underline font-semibold cursor-pointer"
+                        onClick={() => toggleModal(false, addr)}
+                      >
+                        Edit
+                      </a>
+                      <Trash2
+                        className="cursor-pointer"
+                        onClick={() => handleDeleteAddress(addr.id)}
+                      />
+                    </div>
                   </div>
 
                   <p className="flex gap-2 items-center text-secondary-alert my-2 text-sm font-semibold">
@@ -176,6 +202,8 @@ const OrderPage = () => {
               <ModalAddress
                 toggleModal={toggleModal}
                 handleAddAddress={handleAddAddress}
+                modalTitle={modalTitle}
+                selectedAddress={selectedAddressEditing}
               />
             )}
           </div>

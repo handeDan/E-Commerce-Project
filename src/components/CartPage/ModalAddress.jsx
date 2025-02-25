@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import { Save } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
-function ModalAddress({ toggleModal, handleAddAddress }) {
+function ModalAddress({
+  toggleModal,
+  handleAddAddress,
+  modalTitle,
+  selectedAddress,
+}) {
   const [formData, setFormData] = useState({
     title: "",
     name: "",
@@ -12,6 +18,18 @@ function ModalAddress({ toggleModal, handleAddAddress }) {
     address: "",
   });
 
+  useEffect(() => {
+    if (selectedAddress) {
+      formData.title = selectedAddress.title;
+      formData.name = selectedAddress.name;
+      formData.surname = selectedAddress.surname;
+      formData.phone = selectedAddress.phone;
+      formData.city = selectedAddress.city;
+      formData.district = selectedAddress.district;
+      formData.neighborhood = selectedAddress.neighborhood;
+      formData.address = selectedAddress.address;
+    }
+  }, [formData, selectedAddress]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -19,10 +37,11 @@ function ModalAddress({ toggleModal, handleAddAddress }) {
       [name]: value,
     }));
   };
+  console.log(selectedAddress);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleAddAddress(formData);
+    handleAddAddress(formData, selectedAddress ? "update" : null);
     toggleModal();
   };
 
@@ -32,7 +51,7 @@ function ModalAddress({ toggleModal, handleAddAddress }) {
         <div className="relative">
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
             <h3 className="text-lg font-semibold text-gray-900">
-              Create New Address
+              {modalTitle}
             </h3>
             <button
               onClick={toggleModal}
@@ -210,12 +229,24 @@ function ModalAddress({ toggleModal, handleAddAddress }) {
                 />
               </div>
             </div>
-            <button
-              type="submit"
-              className="text-white inline-flex items-center bg-secondary-green hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2 text-center justify-center gap-2 w-full"
-            >
-              <span className="text-xl font-bold">+</span> Save
-            </button>
+            {selectedAddress ? (
+              <button
+                type="submit"
+                className="text-white inline-flex items-center bg-secondary-blue hover:bg-blue-400 font-medium rounded-lg text-sm px-5 py-2 text-center justify-center gap-2 w-full"
+              >
+                <span className="text-xl font-bold">
+                  <Save />
+                </span>{" "}
+                Update
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="text-white inline-flex items-center bg-secondary-green hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2 text-center justify-center gap-2 w-full"
+              >
+                <span className="text-xl font-bold">+</span> Save
+              </button>
+            )}
           </form>
         </div>
       </div>
