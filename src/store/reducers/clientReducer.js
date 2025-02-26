@@ -26,6 +26,7 @@ const initialClientState = {
 
 // Reducers
 export const clientReducer = (state = initialClientState, action) => {
+  console.log(action);
   switch (action.type) {
     case SET_USER:
       const data = action.payload;
@@ -70,6 +71,9 @@ export const clientReducer = (state = initialClientState, action) => {
     case ADD_CARD:
       return { ...state, cards: [...state.cards, action.payload] };
     case UPDATE_CARD:
+      console.log(action.payload, state.cards.map((card) =>
+        card.id === action.payload.id ? action.payload : card
+      ));    
       return {
         ...state,
         cards: state.cards.map((card) =>

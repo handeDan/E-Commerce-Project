@@ -72,7 +72,7 @@ const handleUpdateCard = (updatedCardData) => {
       headers: { Authorization: token },
     })
     .then((res) => {
-      dispatch(updateCard(res.data));
+      dispatch(updateCard(updatedCardData));
       setSelectedCardEditing(null);
       toggleCardModal();
     })
