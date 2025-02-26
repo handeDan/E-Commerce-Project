@@ -4,6 +4,9 @@ import {
   SET_ROLES,
   SET_THEME,
   SET_LANGUAGE,
+  SET_ADDRESSES,
+  UPDATE_ADDRESS,
+  ADD_ADDRESS,
 } from "../actions/clientActions.js";
 
 // Initial States
@@ -40,6 +43,23 @@ export const clientReducer = (state = initialClientState, action) => {
       return { ...state, theme: action.payload };
     case SET_LANGUAGE:
       return { ...state, language: action.payload };
+    case SET_ADDRESSES:
+      return {
+        ...state,
+        addresses: action.payload, // adresleri payload'dan alıp state'e set ediyoruz
+      };
+    case ADD_ADDRESS:
+      return {
+        ...state,
+        addresses: [...state.shoppingCart, action.payload],
+      };
+    case UPDATE_ADDRESS:
+      return {
+        ...state,
+        addresses: state.shoppingCart.map((address) =>
+          address.id === action.payload.id ? action.payload : address
+        ),
+      };
     default:
       return state;
   }

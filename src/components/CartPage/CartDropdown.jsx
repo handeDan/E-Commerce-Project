@@ -46,7 +46,7 @@ function CartDropdown() {
           </a>
           <button
             className="flex-1 text-center bg-secondary-alert hover:bg-secondary-dark text-white py-2 rounded-md"
-            onClick={() => navigate("/checkout")}
+            onClick={() => navigate("/order")}
           >
             Checkout
           </button>
