@@ -16,9 +16,22 @@ const OrderPage = () => {
   const navigate = useNavigate();
 
   const addresses = useSelector((state) => state.client.addresses || []);
-  console.log("Addresses from store:", addresses);
   const cards = useSelector((state) => state.client.cards || []);
+  const cart = useSelector((state) => state.shoppingCart.cart);
+  const checkedItems = cart.filter(item => item.checked);
+
+  // Calculate subtotal first
+  const subtotal = checkedItems.reduce(
+    (acc, item) => acc + item.count * item.product.price, 
+    0
+  );
   
+  // Then calculate shipping cost
+  const shippingCost = checkedItems.length > 0 && subtotal < 150 ? 29.99 : 0;
+  
+  // Finally calculate total price
+  const totalPrice = subtotal + shippingCost;
+
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [activeTab, setActiveTab] = useState("addresses");
   const [modalTitle, setModalTitle] = useState("Create New Address");
@@ -243,18 +256,21 @@ useEffect(() => {
       return;
     }
 
+    if (checkedItems.length === 0) {
+      toast.error("Please select items to order");
+      return;
+    }
+
     const selectedCardData = cards.find(card => card.id === selectedCard);
-    const cartItems = useSelector(state => state.cart.items);
-    const totalPrice = useSelector(state => state.cart.totalPrice);
 
     const orderData = {
       address_id: selectedAddress,
       order_date: new Date().toISOString(),
       price: totalPrice,
-      products: cartItems.map(item => ({
-        product_id: item.id,
-        count: item.quantity,
-        detail: `${item.color} - ${item.size}`
+      products: checkedItems.map(item => ({
+        product_id: item.product.id,
+        count: item.count,
+        detail: `${item.product.color} - ${item.product.size}`
       }))
     };
 
@@ -277,20 +293,20 @@ useEffect(() => {
         // Clear the cart
         dispatch(clearCart());
         
-        // Show success message
-        alert("Order placed successfully! Thank you for your purchase.");
+        // Show success message using toast
+        toast.success("Order placed successfully! Thank you for your purchase.");
         
         // Reset selected values
         setSelectedAddress(null);
         setSelectedCard(null);
         setSelectedPaymentMethod("card");
         
-        // Redirect to home or order confirmation page
+        // Redirect to home
         navigate("/");
       }
     } catch (error) {
       console.error("Error creating order:", error);
-      alert("Failed to create order. Please try again.");
+      toast.error("Failed to create order. Please try again.");
     }
   };
 
