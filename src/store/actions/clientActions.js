@@ -7,6 +7,11 @@ export const SET_LANGUAGE = "SET_LANGUAGE";
 export const SET_ADDRESSES = "SET_ADDRESS";
 export const UPDATE_ADDRESS = "UPDATE_ADDRESS";
 export const ADD_ADDRESS = "ADD_ADDRESS";
+// Add these action types
+export const SET_CARDS = "SET_CARDS";
+export const UPDATE_CARD = "UPDATE_CARD";
+export const ADD_CARD = "ADD_CARD";
+export const DELETE_CARD = "DELETE_CARD";
 
 // Action Creators
 export const setUser = (user) => ({ type: SET_USER, payload: user });
@@ -33,4 +38,27 @@ export const addAddress = (address) => ({
 export const setLanguage = (language) => ({
   type: SET_LANGUAGE,
   payload: language,
+});
+
+
+
+// Add these action creators
+export const setCards = (cards) => ({
+  type: SET_CARDS,
+  payload: cards,
+});
+
+export const updateCard = (card) => ({
+  type: UPDATE_CARD,
+  payload: card,
+});
+
+export const addCard = (card) => ({
+  type: ADD_CARD,
+  payload: card,
+});
+
+export const deleteCard = (cardId) => ({
+  type: DELETE_CARD,
+  payload: cardId,
 });

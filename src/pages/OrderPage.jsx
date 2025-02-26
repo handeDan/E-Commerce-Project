@@ -3,21 +3,129 @@ import { useNavigate } from "react-router-dom";
 import PlaceOrder from "../components/CartPage/PlaceOrder";
 import { CreditCard, MapPin, Trash2, UserRound } from "lucide-react";
 import ModalAddress from "../components/CartPage/ModalAddress";
+import ModalCard from "../components/CartPage/ModalCard";
 import { api } from "./SignupPage";
 import { useDispatch, useSelector } from "react-redux";
-import { setAddresses } from "../store/actions/clientActions.js";
+import { setAddresses, setCards, addCard, updateCard, deleteCard } from "../store/actions/clientActions.js";
 
-const OrderPage = () => {
+const OrderPage = () => {  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const addresses = useSelector((state) => state.client.addresses || []);
   console.log("Addresses from store:", addresses);
+  const cards = useSelector((state) => state.client.cards || []);
+  
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [activeTab, setActiveTab] = useState("addresses");
   const [modalTitle, setModalTitle] = useState("Create New Address");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCardModalOpen, setIsCardModalOpen] = useState(false);
   const [selectedAddressEditing, setSelectedAddressEditing] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCardEditing, setSelectedCardEditing] = useState(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
+
+  const toggleCardModal = (isNew = true, card = null) => {
+    console.log("Modal açılmadan önce:", isCardModalOpen);
+  
+    if (isNew) {
+      setModalTitle("Add New Card");
+      setSelectedCardEditing(null);
+    } else {
+      setModalTitle("Update Card");
+      setSelectedCardEditing(card);
+    }
+  
+    setIsCardModalOpen((prev) => {
+      console.log("Yeni Modal durumu:", !prev);
+      return !prev;
+    });
+  };
+  
+
+const handleSelectCard = (id) => {
+  setSelectedCard(id);
+};
+
+const handleAddCard = (newCardData, type) => {
+  if (type === "update") {
+    handleUpdateCard(newCardData);
+    return;
+  }
+  const token = localStorage.getItem("token");
+  api
+    .post("/user/card", newCardData, {
+      headers: { Authorization: token },
+    })
+    .then((res) => {
+      dispatch(addCard(res.data));
+      toggleCardModal();
+    })
+    .catch((err) => console.error("Error adding card:", err));
+};
+
+const handleUpdateCard = (updatedCardData) => {
+  const token = localStorage.getItem("token");
+  const cardToUpdate = { ...updatedCardData, id: selectedCardEditing.id };
+  api
+    .put("/user/card", cardToUpdate, {
+      headers: { Authorization: token },
+    })
+    .then((res) => {
+      dispatch(updateCard(updatedCardData));
+      setSelectedCardEditing(null);
+      toggleCardModal();
+    })
+    .catch((err) => console.error("Error updating card:", err));
+};
+
+const handleDeleteCard = (cardId) => {
+  const token = localStorage.getItem("token");
+  api
+    .delete(`/user/card/${cardId}`, {
+      headers: { Authorization: token },
+    })
+    .then(() => {
+      dispatch(deleteCard(cardId));
+    })
+    .catch((err) => console.error("Error deleting card:", err));
+};
+
+const handlePaymentMethodChange = (method) => {
+  setSelectedPaymentMethod(method);
+  // If card payment is selected and there are cards, select the first card
+  if (method === "card" && cards.length > 0) {
+    handleSelectCard(cards[0].id);
+  } else {
+    // If cash payment is selected, clear selected card
+    setSelectedCard(null);
+  }
+};
+
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    navigate("/login");
+    return;
+  }
+
+  // Fetch cards
+  api
+    .get("/user/card", { headers: { Authorization: token } })
+    .then((res) => {
+      if (res.data) {
+        dispatch(setCards(res.data));
+      } else {
+        dispatch(setCards([]));
+      }
+    })
+    .catch((err) => {
+      console.error("Error fetching cards:", err);
+      dispatch(setCards([]));
+    });
+}, [dispatch]);
+
   const toggleModal = (isNew = true, address = null) => {
     if (isNew) {
       setModalTitle("Create New Address");
@@ -219,10 +327,100 @@ const OrderPage = () => {
         )}
 
         {activeTab === "payment" && (
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-xl font-bold mb-4">Payment</h2>
-            <p>Ödeme seçenekleri buraya gelecek.</p>
-          </div>
+         <div className="bg-white p-4 rounded shadow">
+           <h2 className="text-xl font-bold mb-4">Payment methods</h2>
+           <label className="inline-flex items-center mb-4">
+            <input
+              type="radio"
+              name="payment_method"
+              value="card"
+              checked={selectedPaymentMethod === "card"}
+              onChange={() => handlePaymentMethodChange("card")}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
+            />
+            <div className="flex flex-col items-baseline gap-1">
+              <span className="ml-2">Credit / Debit card</span>
+              <p className="text-xs w-2/3">You can make your payment securely using a bank or credit card.</p>
+            </div>
+          </label>
+          {selectedPaymentMethod === "card" && (
+            <>
+              {cards.length > 0 ? (
+                cards.map((card, index) => (
+                  <div
+                    key={index}
+                    className={`p-4 border rounded mb-2 ${
+                      selectedCard === card.id ? "border-orange-500" : ""
+                    }`}
+                    onClick={() => handleSelectCard(card.id)}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-start gap-2">
+                        <input
+                          type="radio"
+                          name="selected_card"
+                          checked={selectedCard === card.id}
+                          onChange={() => handleSelectCard(card.id)}
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
+                        />
+                        <div>
+                          <p className="font-semibold">{card.name_on_card}</p>
+                          <p className="text-sm text-gray-600">
+                            **** **** **** {card.card_no?.slice(-4)}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Expires: {card.expire_month}/{card.expire_year}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex justify-end gap-5">
+                        <a
+                          href="#"
+                          className="underline font-semibold cursor-pointer"
+                          onClick={() => toggleCardModal(false, card)}
+                        >
+                          Edit
+                        </a>
+                        <Trash2
+                          className="cursor-pointer"
+                          onClick={() => handleDeleteCard(card.id)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500 mb-4">No saved cards found.</p>
+              )}
+              <button
+                className="mb-4 text-primary-dark font-bold text-sm flex items-center gap-2 rounded-md border w-full py-10 justify-center bg-secondary-gray hover:bg-white"
+                onClick={() => toggleCardModal()}
+              >
+                <CreditCard className="w-4 h-4" />
+                Add New Card
+              </button>
+            </>
+          )}
+           <label className="inline-flex items-center">
+            <input
+              type="radio"
+              name="payment_method"
+              value="cash"
+              checked={selectedPaymentMethod === "cash"}
+              onChange={() => handlePaymentMethodChange("cash")}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
+            />
+            <span className="ml-2">Pay at the door</span>
+          </label>
+         </div>
+        )}
+        {isCardModalOpen && (
+          <ModalCard
+            toggleModal={toggleCardModal}
+            handleAddCard={handleAddCard}
+            modalTitle={modalTitle}
+            selectedCard={selectedCardEditing}
+          />
         )}
       </div>
       <div className="mr-48 mt-20 flex flex-col gap-4 w-1/5">
