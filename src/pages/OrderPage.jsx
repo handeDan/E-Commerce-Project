@@ -7,15 +7,31 @@ import ModalCard from "../components/CartPage/ModalCard";
 import { api } from "./SignupPage";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddresses, setCards, addCard, updateCard, deleteCard } from "../store/actions/clientActions.js";
+import { clearCart } from "../store/actions/cartActions.js";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Toastify CSS dosyası eklendi
 
 const OrderPage = () => {  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const addresses = useSelector((state) => state.client.addresses || []);
-  console.log("Addresses from store:", addresses);
   const cards = useSelector((state) => state.client.cards || []);
+  const cart = useSelector((state) => state.shoppingCart.cart);
+  const checkedItems = cart.filter(item => item.checked);
+
+  // Calculate subtotal first
+  const subtotal = checkedItems.reduce(
+    (acc, item) => acc + item.count * item.product.price, 
+    0
+  );
   
+  // Then calculate shipping cost
+  const shippingCost = checkedItems.length > 0 && subtotal < 150 ? 29.99 : 0;
+  
+  // Finally calculate total price
+  const totalPrice = subtotal + shippingCost;
+
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [activeTab, setActiveTab] = useState("addresses");
   const [modalTitle, setModalTitle] = useState("Create New Address");
@@ -229,6 +245,71 @@ useEffect(() => {
       .catch((err) => console.error(err));
   };
 
+  const handleCreateOrder = async () => {
+    if (!selectedAddress) {
+      toast.error("Please select a delivery address");
+      return;
+    }
+
+    if (selectedPaymentMethod === "card" && !selectedCard) {
+      toast.error("Please select a payment card");
+      return;
+    }
+
+    if (checkedItems.length === 0) {
+      toast.error("Please select items to order");
+      return;
+    }
+
+    const selectedCardData = cards.find(card => card.id === selectedCard);
+
+    const orderData = {
+      address_id: selectedAddress,
+      order_date: new Date().toISOString(),
+      price: totalPrice,
+      products: checkedItems.map(item => ({
+        product_id: item.product.id,
+        count: item.count,
+        detail: `${item.product.color} - ${item.product.size}`
+      }))
+    };
+
+    // Add card details if paying by card
+    if (selectedPaymentMethod === "card" && selectedCardData) {
+      orderData.card_no = selectedCardData.card_no;
+      orderData.card_name = selectedCardData.name_on_card;
+      orderData.card_expire_month = selectedCardData.expire_month;
+      orderData.card_expire_year = selectedCardData.expire_year;
+      orderData.card_ccv = selectedCardData.ccv;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await api.post("/order", orderData, {
+        headers: { Authorization: token }
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        // Clear the cart
+        dispatch(clearCart());
+        
+        // Show success message using toast
+        toast.success("Order placed successfully! Thank you for your purchase.");
+        
+        // Reset selected values
+        setSelectedAddress(null);
+        setSelectedCard(null);
+        setSelectedPaymentMethod("card");
+        
+        // Redirect to home
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error creating order:", error);
+      toast.error("Failed to create order. Please try again.");
+    }
+  };
+
   return (
     <div className="p-6 min-h-screen bg-secondary-gray flex gap-10 justify-center pt-10">
       <div className="ml-48 py-4 flex-1 w-2/3">
@@ -424,7 +505,7 @@ useEffect(() => {
         )}
       </div>
       <div className="mr-48 mt-20 flex flex-col gap-4 w-1/5">
-        <PlaceOrder />
+        <PlaceOrder handleCreateOrder={handleCreateOrder} />
       </div>
     </div>
   );

@@ -1,73 +1,51 @@
-import { ArrowRight } from "lucide-react";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
-function PlaceOrder() {
-  const navigate = useNavigate();
-
+function PlaceOrder({ handleCreateOrder }) {
   const cart = useSelector((state) => state.shoppingCart.cart);
+  const checkedItems = cart.filter(item => item.checked);
 
   const subtotal = () =>
-    cart
-      .filter((item) => item.checked) // Sadece checked olanları al
-      .reduce((acc, item) => acc + item.count * item.product.price, 0);
-  const shipmentPrice = () => {
-    if (cart.length === 0) return "0,00 TL";
-    const totalAmount = cart
-      .filter((item) => item.checked)
-      .every((item) => item.count * item.product.price >= 150);
+    checkedItems.reduce((acc, item) => acc + item.count * item.product.price, 0);
 
-    if (totalAmount) {
-      return "free";
-    } else {
-      return "29,99 TL";
-    }
+  const shipmentPrice = () => {
+    if (checkedItems.length === 0) return 0;
+    const totalAmount = subtotal();
+    return totalAmount >= 150 ? 0 : 29.99;
   };
 
+  const totalPrice = subtotal() + shipmentPrice();
+
   return (
-    <div>
-      <button
-        className="bg-secondary-alert hover:bg-secondary-dark text-white py-2 px-4 rounded-t-md w-full flex gap-2 items-center justify-center"
-        onClick={() => navigate("/shop")}
-      >
-        Continue shopping
-      </button>
-      <div className="border rounded-b-xl p-4">
-        <p className="text-black text-base font-bold mb-5">Order summary</p>
-        <div>
-          <div className="flex gap-8 justify-between mb-4">
-            <p className="text-xs">Subtotal </p>
-            <p className="text-sm font-bold">{subtotal().toFixed(2)} TL</p>
-          </div>
-          <div className="flex gap-8 justify-between mb-4">
-            <p className="text-xs">Shipping </p>
-            <p className="text-sm font-bold">29.99 TL</p>
-          </div>
-          {shipmentPrice() === "free" && (
-            <div className="flex gap-8 justify-between mb-4">
-              <p className="text-xs">Free Shipping over 150 TL </p>
-              <p className="text-sm text-secondary-light_green font-bold">
-                -29.99 TL
-              </p>
-            </div>
-          )}
-          <hr />
-          <br />
-          <div className="flex gap-8 justify-between mb-4">
-            <p className="text-sm">Total </p>
-            <p className="text-sm text-secondary-alert font-bold">
-              {(subtotal() + (shipmentPrice() === "free" ? 0 : 29.99)).toFixed(
-                2
-              )}{" "}
-              TL
-            </p>
-          </div>
-          <button className="bg-secondary-alert hover:bg-secondary-dark text-white py-2 px-4 rounded-md w-full flex gap-2 items-center justify-center">
-            <p onClick={() => navigate("/order")}>Place Order</p>{" "}
-            <ArrowRight size={16} />
-          </button>
+    <div className="bg-white p-4 rounded-lg shadow">
+      <p className="text-black text-base font-bold mb-5">Order summary</p>
+
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-between items-center">
+          <span className="text-gray-600 text-xs">Subtotal:</span>
+          <span className="font-semibold text-sm">₺{subtotal().toFixed(2)}</span>
         </div>
+        <div className="flex justify-between items-center">
+          <span className="text-gray-600 text-xs">Shipping:</span>
+          <span className="font-semibold text-sm">
+            {shipmentPrice() === 0 ? "Free" : `₺${shipmentPrice().toFixed(2)}`}
+          </span>
+        </div>
+        <div className="flex justify-between items-center pt-2 border-t">
+          <span className="text-gray-800 text-sm font-medium">Total Price:</span>
+          <span className="font-bold text-sm">₺{totalPrice.toFixed(2)}</span>
+        </div>
+        <button
+          onClick={handleCreateOrder}
+          disabled={checkedItems.length === 0}
+          className={`w-full py-2 px-4 rounded-md flex gap-2 items-center justify-center ${
+            checkedItems.length === 0
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-secondary-alert hover:bg-secondary-dark text-white"
+          }`}
+        >
+          Place Order
+        </button>
       </div>
     </div>
   );

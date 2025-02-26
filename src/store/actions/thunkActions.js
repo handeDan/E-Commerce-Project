@@ -101,9 +101,9 @@ export const fetchProducts =
           if (tmp[2]) {
             urlParts.push("category=" + tmp[2]);
           }
-          if (tmp[3]) {
-            url += "sort=" + tmp[3];
-          }
+          // if (tmp[3]) {
+          //   url += "sort=" + tmp[3];
+          // }
           url += urlParts.join("&");
         }
       }
@@ -111,6 +111,8 @@ export const fetchProducts =
     if (query.filter) {
       url += `filter=${query.filter}&`;
     }
+    console.log(query);
+    
     if (query.sort) {
       url += `sort=${query.sort}&`;
     }
