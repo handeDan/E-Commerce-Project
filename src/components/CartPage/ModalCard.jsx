@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CreditCard } from "lucide-react";
+import { CreditCard, Save, X } from "lucide-react";
 
 function ModalCard({ toggleModal, handleAddCard, modalTitle, selectedCard }) {
   const [formData, setFormData] = useState({
@@ -39,7 +39,6 @@ function ModalCard({ toggleModal, handleAddCard, modalTitle, selectedCard }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleAddCard(formData, selectedCard ? "update" : null);
-    toggleModal();
   };
 
   return (
@@ -55,8 +54,8 @@ function ModalCard({ toggleModal, handleAddCard, modalTitle, selectedCard }) {
               type="button"
               className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
             >
-              <span>X</span>
               <span className="sr-only">Close modal</span>
+              <X />
             </button>
           </div>
           <form onSubmit={handleSubmit} className="p-4 md:p-5">

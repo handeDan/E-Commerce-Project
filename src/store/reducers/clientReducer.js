@@ -56,37 +56,31 @@ export const clientReducer = (state = initialClientState, action) => {
     case ADD_ADDRESS:
       return {
         ...state,
-        addresses: [...state.shoppingCart, action.payload],
+        addresses: [...state.addresses, action.payload],
       };
     case UPDATE_ADDRESS:
       return {
         ...state,
-        addresses: state.shoppingCart.map((address) =>
+        addresses: state.addresses.map((address) =>
           address.id === action.payload.id ? action.payload : address
         ),
       };
-      case SET_CARDS:
-  return {
-    ...state,
-    cards: action.payload,
-  };
-case ADD_CARD:
-  return {
-    ...state,
-    cards: [...state.cards, action.payload],
-  };
-case UPDATE_CARD:
-  return {
-    ...state,
-    cards: state.cards.map((card) =>
-      card.id === action.payload.id ? action.payload : card
-    ),
-  };
-case DELETE_CARD:
-  return {
-    ...state,
-    cards: state.cards.filter((card) => card.id !== action.payload),
-  };
+    case SET_CARDS:
+      return { ...state, cards: action.payload };
+    case ADD_CARD:
+      return { ...state, cards: [...state.cards, action.payload] };
+    case UPDATE_CARD:
+      return {
+        ...state,
+        cards: state.cards.map((card) =>
+          card.id === action.payload.id ? action.payload : card
+        ),
+      };
+    case DELETE_CARD:
+      return {
+        ...state,
+        cards: state.cards.filter((card) => card.id !== action.payload),
+      };
     default:
       return state;
   }

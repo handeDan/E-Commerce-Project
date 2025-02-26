@@ -6,7 +6,7 @@ import ModalAddress from "../components/CartPage/ModalAddress";
 import ModalCard from "../components/CartPage/ModalCard";
 import { api } from "./SignupPage";
 import { useDispatch, useSelector } from "react-redux";
-import { setAddresses, setCards } from "../store/actions/clientActions.js";
+import { setAddresses, setCards, addCard, updateCard, deleteCard } from "../store/actions/clientActions.js";
 
 const OrderPage = () => {  
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const handleAddCard = (newCardData, type) => {
       headers: { Authorization: token },
     })
     .then((res) => {
-      dispatch(setCards([...cards, res.data]));
+      dispatch(addCard(res.data));
       toggleCardModal();
     })
     .catch((err) => console.error("Error adding card:", err));
@@ -72,10 +72,7 @@ const handleUpdateCard = (updatedCardData) => {
       headers: { Authorization: token },
     })
     .then((res) => {
-      const updatedCards = cards.map((card) =>
-        card.id === selectedCardEditing.id ? res.data : card
-      );
-      dispatch(setCards(updatedCards));
+      dispatch(updateCard(res.data));
       setSelectedCardEditing(null);
       toggleCardModal();
     })
@@ -89,7 +86,7 @@ const handleDeleteCard = (cardId) => {
       headers: { Authorization: token },
     })
     .then(() => {
-      dispatch(setCards(cards.filter((card) => card.id !== cardId)));
+      dispatch(deleteCard(cardId));
     })
     .catch((err) => console.error("Error deleting card:", err));
 };
@@ -131,9 +128,9 @@ useEffect(() => {
   </div>
 
   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-    {cards.map((card) => (
+    {cards.map((card, index) => (
       <div
-        key={card.id}
+        key={index}
         className={`p-4 border rounded-lg ${
           selectedCard === card.id ? "border-primary-500" : "border-gray-200"
         }`}
@@ -159,7 +156,7 @@ useEffect(() => {
           </div>
         </div>
         <div className="text-gray-600">
-          <p>**** **** **** {card.card_no.slice(-4)}</p>
+          <p>**** **** **** {card.card_no?.slice(-4)}</p>
           <p>
             Expires: {card.expire_month}/{card.expire_year}
           </p>
@@ -384,72 +381,70 @@ useEffect(() => {
 
         {activeTab === "payment" && (
          <div className="bg-white p-4 rounded shadow">
-         <h2 className="text-xl font-bold mb-4">Payment methods</h2>
-         {cards.length > 0 ? (
-           cards.map((card, index) => (
-             <div
-               key={index}
-               className={`p-4 border rounded mb-2 ${
-                 selectedCard === card.id ? "border-orange-500" : ""
-               }`}
-               onClick={() => handleSelectCard(card.id)}
-             >
-               <div className="flex items-center justify-between">
-                 <div className="flex items-center justify-start gap-2">
-                   <input
-                     id="default-radio-1"
-                     type="radio"
-                     value=""
-                     name="default-radio"
-                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                   />
-                   <p className="font-semibold">{card.title}</p>
-                 </div>
-                 <div className="flex justify-end gap-5">
-                   <a
-                     href="#"
-                     className="underline font-semibold cursor-pointer"
-                     onClick={() => toggleCardModal(false, card)}
-                   >
-                     Edit
-                   </a>
-                   <Trash2
-                     className="cursor-pointer"
-                     onClick={() => handleDeleteCard(card.id)}
-                   />
+           <h2 className="text-xl font-bold mb-4">Payment methods</h2>
+           {cards.length > 0 ? (
+             cards.map((card, index) => (
+               <div
+                 key={index}
+                 className={`p-4 border rounded mb-2 ${
+                   selectedCard === card.id ? "border-orange-500" : ""
+                 }`}
+                 onClick={() => handleSelectCard(card.id)}
+               >
+                 <div className="flex items-center justify-between">
+                   <div className="flex items-center justify-start gap-2">
+                     <input
+                       type="radio"
+                       name="selected_card"
+                       checked={selectedCard === card.id}
+                       onChange={() => handleSelectCard(card.id)}
+                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-4 focus:ring-blue-500"
+                     />
+                     <div>
+                       <p className="font-semibold">{card.name_on_card}</p>
+                       <p className="text-sm text-gray-600">
+                         **** **** **** {card.card_no?.slice(-4)}
+                       </p>
+                       <p className="text-sm text-gray-600">
+                         Expires: {card.expire_month}/{card.expire_year}
+                       </p>
+                     </div>
+                   </div>
+                   <div className="flex justify-end gap-5">
+                     <a
+                       href="#"
+                       className="underline font-semibold cursor-pointer"
+                       onClick={() => toggleCardModal(false, card)}
+                     >
+                       Edit
+                     </a>
+                     <Trash2
+                       className="cursor-pointer"
+                       onClick={() => handleDeleteCard(card.id)}
+                     />
+                   </div>
                  </div>
                </div>
-
-               <p className="flex gap-2 items-center text-secondary-alert my-2 text-sm font-semibold">
-                 <UserRound size={14} /> {card.name} {card.surname}
-               </p>
-               <p className="text-sm">{card.phone}</p>
-               <p className="font-medium my-2 text-sm">
-                 {card.city}, {card.district}, {card.neighborhood}
-               </p>
-               <p className="font-medium text-sm">{card.address}</p>
-             </div>
-           ))
-         ) : (
-           <p className="text-gray-500">No saved cards found.</p>
-         )}
-         <button
-           className="mt-2 text-primary-dark font-bold text-sm flex items-center gap-2 rounded-md border w-full py-10 justify-center bg-secondary-gray hover:bg-white"
-           onClick={() => toggleCardModal()}
-         >
-           <span className="text-secondary-alert font-bold text-2xl">+</span>{" "}
-           Add new card
-         </button>
-        {/* Card Modal */}
-{isCardModalOpen && (
-  <ModalCard
-    toggleModal={toggleCardModal}
-    handleAddCard={handleAddCard}
-    modalTitle={modalTitle}
-    selectedCard={selectedCardEditing}
-  />
-)}
-       </div>
+             ))
+           ) : (
+             <p className="text-gray-500">No saved cards found.</p>
+           )}
+           <button
+             className="mt-2 text-primary-dark font-bold text-sm flex items-center gap-2 rounded-md border w-full py-10 justify-center bg-secondary-gray hover:bg-white"
+             onClick={() => toggleCardModal()}
+           >
+             <span className="text-secondary-alert font-bold text-2xl">+</span>{" "}
+             Add new card
+           </button>
+           {isCardModalOpen && (
+             <ModalCard
+               toggleModal={toggleCardModal}
+               handleAddCard={handleAddCard}
+               modalTitle={modalTitle}
+               selectedCard={selectedCardEditing}
+             />
+           )}
+         </div>
         )}
       </div>
       <div className="mr-48 mt-20 flex flex-col gap-4 w-1/5">
