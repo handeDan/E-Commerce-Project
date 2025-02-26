@@ -20,16 +20,31 @@ function ModalAddress({
 
   useEffect(() => {
     if (selectedAddress) {
-      formData.title = selectedAddress.title;
-      formData.name = selectedAddress.name;
-      formData.surname = selectedAddress.surname;
-      formData.phone = selectedAddress.phone;
-      formData.city = selectedAddress.city;
-      formData.district = selectedAddress.district;
-      formData.neighborhood = selectedAddress.neighborhood;
-      formData.address = selectedAddress.address;
+      setFormData({
+        title: selectedAddress.title || "",
+        name: selectedAddress.name || "",
+        surname: selectedAddress.surname || "",
+        phone: selectedAddress.phone || "",
+        city: selectedAddress.city || "",
+        district: selectedAddress.district || "",
+        neighborhood: selectedAddress.neighborhood || "",
+        address: selectedAddress.address || "",
+        id: selectedAddress.id,
+      });
+    } else {
+      setFormData({
+        title: "",
+        name: "",
+        surname: "",
+        phone: "",
+        city: "",
+        district: "",
+        neighborhood: "",
+        address: "",
+      });
     }
-  }, [formData, selectedAddress]);
+  }, [selectedAddress]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({

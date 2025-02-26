@@ -19,16 +19,12 @@ const OrderPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAddressEditing, setSelectedAddressEditing] = useState(null);
   const toggleModal = (isNew = true, address = null) => {
-    console.log("toggleModal", isNew, address);
-
-    setSelectedAddressEditing(null);
     if (isNew) {
       setModalTitle("Create New Address");
+      setSelectedAddressEditing(null);
     } else {
       setModalTitle("Update Address");
-      if (address) {
-        setSelectedAddressEditing(address);
-      }
+      setSelectedAddressEditing(address);
     }
     setIsModalOpen(!isModalOpen);
   };
@@ -75,27 +71,40 @@ const OrderPage = () => {
       })
       .catch((err) => console.error(err));
   };
+
   const handleUpdateAddress = (updatedAddressData) => {
     const token = localStorage.getItem("token");
+    const addressToUpdate = { ...updatedAddressData, id: selectedAddressEditing.id };
     api
       .put(
         "/user/address",
-        { ...updatedAddressData, id: selectedAddressEditing.id },
+        addressToUpdate,
         {
           headers: { Authorization: token },
         }
       )
       .then((res) => {
-        dispatch(
-          setAddresses(
-            addresses.map((address) =>
-              address.id === updatedAddressData.id ? res.data : address
-            )
-          )
-        ); // Adres güncellemesini Redux store'a kaydet
+        // Update local state first
+        const updatedAddress = res.data;
+        const updatedAddresses = addresses.map((address) =>
+          address.id === selectedAddressEditing.id ? updatedAddress : address
+        );
+        dispatch(setAddresses(updatedAddresses));
+        
+        // Fetch fresh data from server to ensure sync
+        api
+          .get("/user/address", { headers: { Authorization: token } })
+          .then((response) => {
+            if (response.data) {
+              dispatch(setAddresses(response.data));
+            }
+          })
+          .catch((err) => console.error("Error fetching updated addresses:", err));
+
+        setSelectedAddressEditing(null);
         toggleModal();
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Error updating address:", err));
   };
 
   const handleDeleteAddress = (addressId) => {
