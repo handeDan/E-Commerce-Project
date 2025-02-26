@@ -339,10 +339,9 @@ useEffect(() => {
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
             />
             <div className="flex flex-col items-baseline gap-1">
-            <span className="ml-2">Credit / Debit card</span>
-            <p className="text-xs w-2/3">You can make your payment securely using a bank or credit card.</p>
+              <span className="ml-2">Credit / Debit card</span>
+              <p className="text-xs w-2/3">You can make your payment securely using a bank or credit card.</p>
             </div>
-            
           </label>
           {selectedPaymentMethod === "card" && (
             <>
@@ -409,11 +408,19 @@ useEffect(() => {
               value="cash"
               checked={selectedPaymentMethod === "cash"}
               onChange={() => handlePaymentMethodChange("cash")}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-4 focus:ring-blue-500"
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
             />
             <span className="ml-2">Pay at the door</span>
           </label>
          </div>
+        )}
+        {isCardModalOpen && (
+          <ModalCard
+            toggleModal={toggleCardModal}
+            handleAddCard={handleAddCard}
+            modalTitle={modalTitle}
+            selectedCard={selectedCardEditing}
+          />
         )}
       </div>
       <div className="mr-48 mt-20 flex flex-col gap-4 w-1/5">
