@@ -5,6 +5,7 @@ import PageContent from "./layout/PageContent";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchToken } from "./store/actions/thunkActions";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <div>
+      <ToastContainer />
       <Router>
         <Header />
         <PageContent />

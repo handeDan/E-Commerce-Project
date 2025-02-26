@@ -5,9 +5,6 @@ function PlaceOrder({ handleCreateOrder }) {
   const cart = useSelector((state) => state.shoppingCart.cart);
   console.log("Cart state:", cart);
   
-  const cartItems = cart?.items || [];
-  const totalPrice = cart?.totalPrice || 0;
-
   const subtotal = () =>
     cart
       .filter((item) => item.checked) // Sadece checked olanları al

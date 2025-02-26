@@ -8,6 +8,8 @@ import { api } from "./SignupPage";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddresses, setCards, addCard, updateCard, deleteCard } from "../store/actions/clientActions.js";
 import { clearCart } from "../store/actions/cartActions.js";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Toastify CSS dosyası eklendi
 
 const OrderPage = () => {  
   const dispatch = useDispatch();
@@ -232,12 +234,12 @@ useEffect(() => {
 
   const handleCreateOrder = async () => {
     if (!selectedAddress) {
-      alert("Please select a delivery address");
+      toast.error("Please select a delivery address");
       return;
     }
 
     if (selectedPaymentMethod === "card" && !selectedCard) {
-      alert("Please select a payment card");
+      toast.error("Please select a payment card");
       return;
     }
 
