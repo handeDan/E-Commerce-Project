@@ -1,36 +1,56 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React from "react";
+import { useSelector } from "react-redux";
 
-function SideBar({selectedPage, setSelectedPage}) {
-    const user = useSelector((state) => {
-        return state.client.user;
-      });
+function SideBar({ selectedPage, setSelectedPage }) {
+  const user = useSelector((state) => {
+    return state.client.user;
+  });
 
   return (
     <div>
-
-
-<div className="w-64 bg-white shadow-md p-5">
+      <div className="w-64 bg-white shadow-md p-5">
         <h2 className="text-xl font-semibold mb-6">{user?.name}</h2>
         <ul className="space-y-3">
           <li>
-            <a to="/my-profile" className={"block p-3 rounded-md hover:cursor-pointer" + (selectedPage === "my-profile" ? " bg-primary-dark text-white" : " hover:bg-gray-100")} onClick={() => setSelectedPage("my-profile")}>
+            <a
+              to="/my-profile"
+              className={
+                "block p-3 rounded-md hover:cursor-pointer" +
+                (selectedPage === "my-profile"
+                  ? " bg-primary-dark text-white"
+                  : " hover:bg-gray-100")
+              }
+              onClick={() => setSelectedPage("my-profile")}
+            >
               My Profile
             </a>
           </li>
           <li>
-            <a to="/my-orders" className={"block p-3 rounded-md hover:cursor-pointer" + (selectedPage === "my-orders" ? " bg-primary-dark text-white" : " hover:bg-gray-100")} onClick={() => setSelectedPage("my-orders")}>
+            <a
+              to="/my-orders"
+              className={
+                "block p-3 rounded-md hover:cursor-pointer" +
+                (selectedPage === "my-orders"
+                  ? " bg-primary-dark text-white"
+                  : " hover:bg-gray-100")
+              }
+              onClick={() => setSelectedPage("my-orders")}
+            >
               My Orders
             </a>
           </li>
           <li>
-            <a to="/my-addresses" className={"block p-3 rounded-md hover:cursor-pointer" + (selectedPage === "my-addresses" ? " bg-primary-dark text-white" : " hover:bg-gray-100")} onClick={() => setSelectedPage("my-addresses")}>
+            <a
+              to="/my-addresses"
+              className={
+                "block p-3 rounded-md hover:cursor-pointer" +
+                (selectedPage === "my-addresses"
+                  ? " bg-primary-dark text-white"
+                  : " hover:bg-gray-100")
+              }
+              onClick={() => setSelectedPage("my-addresses")}
+            >
               My Addresses
-            </a>
-          </li>
-          <li>
-            <a to="/my-cards" className={"block p-3 rounded-md hover:cursor-pointer" + (selectedPage === "my-cards" ? " bg-primary-dark text-white" : " hover:bg-gray-100")} onClick={() => setSelectedPage("my-cards")}>
-              My Cards
             </a>
           </li>
           <li>
@@ -48,7 +68,7 @@ function SideBar({selectedPage, setSelectedPage}) {
         </ul>
       </div>
     </div>
-  )
+  );
 }
 
-export default SideBar
+export default SideBar;

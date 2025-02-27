@@ -18,7 +18,7 @@ function MyOrders() {
                 {orders.map((order) => (
                   <div
                     key={order.id}
-                    className="bg-white p-4 shadow-md rounded-lg"
+                    className="bg-white p-4 shadow-md rounded-lg border border-orange-500"
                   >
                     <h2 className="text-lg font-bold text-gray-800">
                       Order #{order.id} -{" "}

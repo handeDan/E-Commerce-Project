@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import SideBar from "../components/PanelPage/SideBar";
 import MyProfile from "../components/PanelPage/MyProfile";
 import MyOrders from "../components/PanelPage/MyOrders";
+import MyAddresses from "../components/PanelPage/MyAddresses";
 
 function PanelPage() {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function PanelPage() {
 
         {selectedPage === "my-profile" && <MyProfile />}
         {selectedPage === "my-orders" && <MyOrders />}
+        {selectedPage === "my-addresses" && <MyAddresses />}
       </div>
     </div>
   );
