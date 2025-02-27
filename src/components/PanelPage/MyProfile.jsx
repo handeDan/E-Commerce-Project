@@ -9,7 +9,7 @@ function MyProfile() {
   return (
     <div>
       {" "}
-      <aside className="flex-1 p-6">
+      <aside className="flex-1 p-6 pt-2">
         <h1 className="text-black text-base mb-4 pl-4 md:pl-5">My Profile</h1>
         <div className="bg-white p-4 shadow-md rounded-lg">
           <aside className="p-4 md:p-5">

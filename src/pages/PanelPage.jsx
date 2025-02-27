@@ -6,6 +6,7 @@ import { setOrders } from "../store/actions/clientActions";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../components/PanelPage/SideBar";
 import MyProfile from "../components/PanelPage/MyProfile";
+import MyOrders from "../components/PanelPage/MyOrders";
 
 function PanelPage() {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ function PanelPage() {
   }, [dispatch, navigate]);
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-full bg-gray-100">
       <div className="mx-48 my-10 flex items-start">
         <SideBar
           selectedPage={selectedPage}
@@ -39,14 +40,7 @@ function PanelPage() {
         />
 
         {selectedPage === "my-profile" && <MyProfile />}
-        {selectedPage === "my-orders" && (
-          <aside className="flex-1 p-6">
-            <h1 className="text-black text-base mb-4">My Orders</h1>
-            <div className="bg-white p-4 shadow-md rounded-lg">
-              <p>Your order history will be displayed here.</p>
-            </div>
-          </aside>
-        )}
+        {selectedPage === "my-orders" && <MyOrders />}
       </div>
     </div>
   );
