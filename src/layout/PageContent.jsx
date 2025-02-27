@@ -11,6 +11,7 @@ import AboutPage from "../pages/AboutPage";
 import ProductsList from "../components/ShopPage/ProductsList";
 import CartPage from "../pages/CartPage";
 import OrderPage from "../pages/OrderPage";
+import MyOrdersPage from "../pages/MyOrdersPage";
 
 const PageContent = () => {
   return (
@@ -28,6 +29,7 @@ const PageContent = () => {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/order" element={<OrderPage />} />
+          <Route path="/myOrders" element={<MyOrdersPage />} />
         </Routes>
       </>
     </div>

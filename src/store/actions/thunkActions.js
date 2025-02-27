@@ -61,6 +61,8 @@ export const fetchToken = async (dispatch) => {
     dispatch(setUser(response.data)); // Redux store'a kullanıcıyı kaydet
   } catch (error) {
     console.error("Error fetching user:", error);
+    window.location.href = "/login";
+    localStorage.removeItem("token");
   }
 };
 

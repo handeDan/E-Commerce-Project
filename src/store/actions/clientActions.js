@@ -12,6 +12,7 @@ export const SET_CARDS = "SET_CARDS";
 export const UPDATE_CARD = "UPDATE_CARD";
 export const ADD_CARD = "ADD_CARD";
 export const DELETE_CARD = "DELETE_CARD";
+export const SET_ORDERS = "SET_ORDERS";
 
 // Action Creators
 export const setUser = (user) => ({ type: SET_USER, payload: user });
@@ -61,4 +62,9 @@ export const addCard = (card) => ({
 export const deleteCard = (cardId) => ({
   type: DELETE_CARD,
   payload: cardId,
+});
+
+export const setOrders = (orders) => ({
+  type: SET_ORDERS,
+  payload: orders,
 });
