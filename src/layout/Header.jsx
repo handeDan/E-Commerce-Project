@@ -208,7 +208,7 @@ function Header() {
                           <p className="text-primary-light">Profile</p>
                           <p
                             className="text-primary hover:font-bold"
-                            onClick={() => navigate("/myOrders")}
+                            onClick={() => navigate("/panel")}
                           >
                             My orders
                           </p>
