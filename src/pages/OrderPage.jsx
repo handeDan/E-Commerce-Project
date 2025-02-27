@@ -123,6 +123,7 @@ useEffect(() => {
   const token = localStorage.getItem("token");
   if (!token) {
     navigate("/login");
+    toast.error("Please log in to view your orders");
     return;
   }
 
@@ -157,6 +158,7 @@ useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       navigate("/login");
+      toast.error("Please log in to continue");
       return;
     }
     api

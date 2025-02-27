@@ -205,7 +205,13 @@ function Header() {
                     <nav className="absolute left-0 top-full bg-white shadow-lg z-50 p-5 w-full md:w-auto min-w-[180px] md:max-w-[500px] rounded-md">
                       <div className="flex flex-col md:flex-row gap-6">
                         <ul className="flex flex-col gap-4 text-primary font-medium cursor-pointer">
-                          <p className="text-primary-light">Profile</p>
+                          <p className="text-primary hover:font-bold" onClick={() => navigate("/panel")}>Profile</p>
+                          <p
+                            className="text-primary hover:font-bold"
+                            onClick={() => navigate("/panel")}
+                          >
+                            My orders
+                          </p>
                           <p
                             className="text-primary hover:font-bold"
                             onClick={() => logout()}

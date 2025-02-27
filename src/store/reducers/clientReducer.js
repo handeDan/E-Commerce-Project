@@ -11,6 +11,7 @@ import {
   ADD_CARD,
   UPDATE_CARD,
   DELETE_CARD,
+  SET_ORDERS
 } from "../actions/clientActions.js";
 
 // Initial States
@@ -22,6 +23,7 @@ const initialClientState = {
   theme: "light",
   language: "en",
   cards: [],
+  orders: [],
 };
 
 // Reducers
@@ -85,6 +87,8 @@ export const clientReducer = (state = initialClientState, action) => {
         ...state,
         cards: state.cards.filter((card) => card.id !== action.payload),
       };
+    case SET_ORDERS:
+      return { ...state, orders: action.payload };
     default:
       return state;
   }
