@@ -25,7 +25,7 @@ function MyOrders() {
                       {new Date(order.order_date).toLocaleDateString()}
                     </h2>
                     <p className="text-gray-600">
-                      Total Price: ${order.price.toFixed(2)}
+                      Total Price: {order.price.toFixed(2)} TL
                     </p>
 
                     {/* Ürün Kartları */}
@@ -45,7 +45,10 @@ function MyOrders() {
                               {product.name}
                             </h3>
                             <p className="text-sm text-gray-500">
-                              Price: ${product.price}
+                              Price: {product.price} TL
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              Size: {product.size || "Standard"}
                             </p>
                             <p className="text-sm text-gray-500">
                               Count: {product.count}

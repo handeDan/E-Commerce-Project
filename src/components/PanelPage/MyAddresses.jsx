@@ -24,7 +24,7 @@ function MyAddresses() {
       .get("/user/address", { headers: { Authorization: token } })
       .then((res) => {
         if (res.data) {
-          dispatch(setAddresses([res.data]));
+          dispatch(setAddresses(res.data));
         } else {
           dispatch(setAddresses([]));
         }
@@ -48,19 +48,19 @@ function MyAddresses() {
                     key={index}
                     className="bg-white shadow-md rounded-b-lg border border-orange-500"
                   >
-                    <div className="bg-blue-50 px-4 py-2">
-                      <p className="text-gray-600 font-semibold">
+                    <div className="bg-gray-100 border-b px-4 py-2">
+                      <p className="text-primary-dark font-semibold">
                         {address.title}
                       </p>
                     </div>
-                    <div className="p-4 flex flex-col gap-2">
-                      <p>
-                        {address.name} {address.surname}
-                      </p>
+                    <p className="font-semibold text-xs bg-blue-50 px-4 py-2 border-b">
+                      {address.name} {address.surname}
+                    </p>
+                    <div className="p-4 flex flex-col gap-2 text-xs">
                       <p>{address.neighborhood}</p>
 
                       <p>
-                        {address.city}, {address.district}
+                        {address.city} / {address.district}
                       </p>
                       <p>{address.address}</p>
                       <p>{address.phone}</p>
